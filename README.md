@@ -1,2 +1,2 @@
 # suoranta
-my first SDL 2.0 game
+A version controlled storage for my reaper synthwave projects
