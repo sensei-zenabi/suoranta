@@ -1,2 +1,2 @@
 # suoranta
-A version controlled storage for my reaper synthwave projects
+A version controlled storage for my articles.
