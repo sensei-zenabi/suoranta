@@ -5,7 +5,7 @@
 //     -lSDL2_gfx -lm
 
 #include <SDL2/SDL.h>
-#include <SDL2/SDL2_gfxPrimitives.h>
+#include <SDL2_gfxPrimitives.h>
 #include <stdio.h>
 #include <math.h>
 
@@ -19,56 +19,42 @@ static double degToRad(double angleDeg) {
 //==============================================================================
 // VECTOR & ROCKET STRUCTS:
 
-typedef struct {
-    float x, y;
-} Vec2;
+typedef struct { float x, y; } Vec2;
 
 typedef struct {
-    // Kinematic state
-    Vec2    position;            // px
-    Vec2    velocity;            // px/sec
-    Vec2    acceleration;        // px/sec²
-    float   angle;               // degrees
-    float   angularVelocity;     // deg/sec
+    Vec2 position;
+    Vec2 velocity;
+    Vec2 acceleration;
+    float angle;
+    float angularVelocity;
 
-    // Physical parameters
-    float   mass;                // kg
-    float   maxThrust;           // N
-    float   thrustLevel;         // 0–1
-    float   dragCoefficient;     // dimensionless
-    float   frontalArea;         // m²
-    float   fuel;                // kg
-    float   fuelConsumption;     // kg/sec @ full throttle
-
-    // Rendering
-    int     size;                // px (line length)
+    float mass;
+    float maxThrust;
+    float thrustLevel;
+    float dragCoefficient;
+    float frontalArea;
+    float fuel;
+    float fuelConsumption;
+    int size;
 } Rocket;
 
-typedef struct {
-    float gravity;
-} World;
+typedef struct { float gravity; } World;
 
 //==============================================================================
-// DRAWING:
+// DRAWING ROCKET:
 
-static void DrawRocket(SDL_Renderer *ren,
-                       int x0, int y0,
-                       double angleDeg,
-                       int size)
+static void DrawRocket(SDL_Renderer *ren, int x0, int y0,
+                       double angleDeg, int size)
 {
     const double wingSpread = 33.0;
     const double halfSize  = size * 0.5;
-
-    // Bisector of the V
     double bisectDeg = angleDeg + wingSpread * 0.5;
     double bisectRad = degToRad(bisectDeg);
 
-    // Compute tail point (old origin) halfSize back along bisector
     double ox = x0 - cos(bisectRad) * halfSize;
     double oy = y0 - sin(bisectRad) * halfSize;
     int ix0 = (int)round(ox), iy0 = (int)round(oy);
 
-    // Compute the two tips
     double rad1 = degToRad(angleDeg);
     double rad2 = degToRad(angleDeg + wingSpread);
     int x1 = ix0 + (int)round(cos(rad1) * size);
@@ -86,20 +72,17 @@ static void DrawRocket(SDL_Renderer *ren,
 
 int main(int argc, char *argv[])
 {
-    // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         fprintf(stderr, "SDL_Init error: %s\n", SDL_GetError());
         return 1;
     }
 
-    // Disable texture filtering for pixel-perfect rendering
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
 
     SDL_Window *win = SDL_CreateWindow(
         "Rocket Physics",
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        0, 0,
-        SDL_WINDOW_FULLSCREEN_DESKTOP
+        0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP
     );
     if (!win) {
         fprintf(stderr, "Window error: %s\n", SDL_GetError());
@@ -118,99 +101,75 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // Set logical size to retro resolution
     SDL_RenderSetLogicalSize(ren, 320, 240);
 
-    // Extern font16x16 from SDL2_gfx
-    extern const GFX_Font font16x16;
-
-    // Initialize world
     World world = { .gravity = 9.82f };
-
-    // Initialize rocket
     Rocket rocket1 = {
-        .position            = {160.0f, 120.0f},
-        .velocity            = {  0.0f,   0.0f},
-        .acceleration        = {  0.0f,   0.0f},
-        .angle               = 0.0f,
-        .angularVelocity     = 0.0f,
-        .mass                = 1.0f,
-        .maxThrust           = 100.0f,
-        .thrustLevel         = 0.0f,
-        .dragCoefficient     = 0.05f,
-        .frontalArea         = 0.01f,
-        .fuel                = 20.0f,
-        .fuelConsumption     = 1.0f,
-        .size                = 10
+        .position = {160.0f, 120.0f},
+        .velocity = {0.0f, 0.0f},
+        .acceleration = {0.0f, 0.0f},
+        .angle = 0.0f,
+        .angularVelocity = 0.0f,
+        .mass = 1.0f,
+        .maxThrust = 100.0f,
+        .thrustLevel = 0.0f,
+        .dragCoefficient = 0.05f,
+        .frontalArea = 0.01f,
+        .fuel = 20.0f,
+        .fuelConsumption = 1.0f,
+        .size = 10
     };
 
-    const float dt = 1.0f / 60.0f;    // fixed timestep ~60 FPS
-    const float rotVelocity = 120.0f; // deg/sec² when ◀️/▶️ held
-
+    const float dt = 1.0f / 60.0f;
+    const float rotVelocity = 120.0f;
     int running = 1;
     SDL_Event ev;
 
     while (running) {
-        // 1) Events
         while (SDL_PollEvent(&ev)) {
-            if (ev.type == SDL_QUIT) {
-                running = 0;
-            } else if (ev.type == SDL_KEYDOWN && ev.key.keysym.sym == SDLK_ESCAPE) {
+            if (ev.type == SDL_QUIT || 
+                (ev.type == SDL_KEYDOWN && ev.key.keysym.sym == SDLK_ESCAPE)) {
                 running = 0;
             }
         }
 
-        // 2) Input & control
         const Uint8 *keys = SDL_GetKeyboardState(NULL);
         if (keys[SDL_SCANCODE_LEFT])      rocket1.angularVelocity = -rotVelocity;
         else if (keys[SDL_SCANCODE_RIGHT]) rocket1.angularVelocity = rotVelocity;
         else                                rocket1.angularVelocity = 0.0f;
 
-        if (keys[SDL_SCANCODE_UP] && rocket1.fuel > 0.0f) rocket1.thrustLevel = -1.0f;
-        else                                            rocket1.thrustLevel = 0.0f;
+        rocket1.thrustLevel = (keys[SDL_SCANCODE_UP] && rocket1.fuel > 0.0f) ? -1.0f : 0.0f;
 
-        // 3) Physics integration
+        // Physics integration
         rocket1.angle += rocket1.angularVelocity * dt;
-
         float thrustForce = rocket1.maxThrust * rocket1.thrustLevel;
         double rad = degToRad(rocket1.angle);
         rocket1.acceleration.x = cos(rad) * thrustForce / rocket1.mass;
         rocket1.acceleration.y = sin(rad) * thrustForce / rocket1.mass;
-
-        // Drag & gravity
         rocket1.acceleration.x -= rocket1.dragCoefficient * rocket1.velocity.x * fabsf(rocket1.velocity.x);
         rocket1.acceleration.y -= rocket1.dragCoefficient * rocket1.velocity.y * fabsf(rocket1.velocity.y);
         rocket1.acceleration.y += world.gravity;
 
-        rocket1.velocity.x   += rocket1.acceleration.x * dt;
-        rocket1.velocity.y   += rocket1.acceleration.y * dt;
-        rocket1.position.x   += rocket1.velocity.x    * dt;
-        rocket1.position.y   += rocket1.velocity.y    * dt;
-
-        // Fuel burn
+        rocket1.velocity.x += rocket1.acceleration.x * dt;
+        rocket1.velocity.y += rocket1.acceleration.y * dt;
+        rocket1.position.x += rocket1.velocity.x * dt;
+        rocket1.position.y += rocket1.velocity.y * dt;
         rocket1.fuel -= rocket1.fuelConsumption * rocket1.thrustLevel * dt;
-        if (rocket1.fuel < 0.0f) {
-            rocket1.fuel       = 0.0f;
-            rocket1.thrustLevel = 0.0f;
-        }
+        if (rocket1.fuel < 0.0f) { rocket1.fuel = 0.0f; rocket1.thrustLevel = 0.0f; }
 
-        // 4) Render
         SDL_SetRenderDrawColor(ren, 0, 0, 0, 255);
         SDL_RenderClear(ren);
 
-        // Draw rocket
         DrawRocket(ren,
                    (int)roundf(rocket1.position.x),
                    (int)roundf(rocket1.position.y),
                    rocket1.angle,
                    rocket1.size);
 
-        // Draw pixel-perfect text
-        stringRGBA(ren,
-                   10, 10,
-                   "HELLO WORLD",
-                   255, 255, 255, 255,
-                   &font16x16);
+        // Print remaining fuel
+        char fuelText[32];
+        snprintf(fuelText, sizeof(fuelText), "Fuel: %.1f kg", rocket1.fuel);
+        stringRGBA(ren, 10, 10, fuelText, 255, 255, 255, 255);
 
         SDL_RenderPresent(ren);
         SDL_Delay((Uint32)(dt * 1000));
