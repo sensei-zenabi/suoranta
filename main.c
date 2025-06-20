@@ -17,7 +17,7 @@ static double degToRad(double angleDeg) {
 }
 
 //==============================================================================
-// VECTOR & ROCKET STRUCTS:
+// VECTOR, ROCKET & WORLD STRUCTS:
 
 typedef struct { float x, y; } Vec2;
 
@@ -39,6 +39,69 @@ typedef struct {
 } Rocket;
 
 typedef struct { float gravity; } World;
+
+//==============================================================================
+// LEVEL / TERRAIN:
+
+#define MAX_LEVEL_POINTS 64
+
+typedef struct {
+    int numPoints;
+    Vec2 points[MAX_LEVEL_POINTS];
+} Level;
+
+// Example levels with different ground shapes:
+Level levels[] = {
+    // Level 0: flat with a dip in the middle
+    {
+        .numPoints = 5,
+        .points = {
+            {   0, 200 },
+            {  80, 200 },
+            { 160, 160 },
+            { 240, 200 },
+            { 320, 200 },
+        }
+    },
+    // Level 1: simple ramp up then down
+    {
+        .numPoints = 3,
+        .points = {
+            {   0, 220 },
+            { 160, 120 },
+            { 320, 220 },
+        }
+    }
+};
+const int numLevels = sizeof(levels) / sizeof(levels[0]);
+
+// Draw the terrain polyline in green
+static void DrawGround(SDL_Renderer *ren, const Level *lvl) {
+    SDL_SetRenderDrawColor(ren, 0, 255, 0, 255);
+    for (int i = 0; i < lvl->numPoints - 1; i++) {
+        SDL_RenderDrawLine(
+            ren,
+            (int)lvl->points[i].x,   (int)lvl->points[i].y,
+            (int)lvl->points[i+1].x, (int)lvl->points[i+1].y
+        );
+    }
+}
+
+// Get ground Y at given X via linear interpolation
+static float GroundYAtX(const Level *lvl, float x) {
+    for (int i = 0; i < lvl->numPoints - 1; i++) {
+        float x0 = lvl->points[i].x,   y0 = lvl->points[i].y;
+        float x1 = lvl->points[i+1].x, y1 = lvl->points[i+1].y;
+        if ((x >= x0 && x <= x1) || (x >= x1 && x <= x0)) {
+            float t = (x - x0) / (x1 - x0);
+            return y0 + t * (y1 - y0);
+        }
+    }
+    // clamp outside range
+    if (x < levels[0].points[0].x)
+        return levels[0].points[0].y;
+    return levels[lvl->numPoints-1].points[lvl->numPoints-1].y;
+}
 
 //==============================================================================
 // DRAWING ROCKET:
@@ -103,6 +166,7 @@ int main(int argc, char *argv[])
 
     SDL_RenderSetLogicalSize(ren, 320, 240);
 
+    int currentLevel = 0;
     World world = { .gravity = 9.82f };
     Rocket rocket1 = {
         .position = {160.0f, 120.0f},
@@ -157,24 +221,31 @@ int main(int argc, char *argv[])
         rocket1.fuel -= rocket1.fuelConsumption * rocket1.thrustLevel * dt;
         if (rocket1.fuel < 0.0f) { rocket1.fuel = 0.0f; rocket1.thrustLevel = 0.0f; }
 
+        // Collision detection with ground
+        float groundY = GroundYAtX(&levels[currentLevel], rocket1.position.x);
+        if (rocket1.position.y + rocket1.size >= groundY) {
+            printf("Crash! Game Over on level %d\n", currentLevel);
+            running = 0;
+        }
+
+        // Rendering
         SDL_SetRenderDrawColor(ren, 0, 0, 0, 255);
         SDL_RenderClear(ren);
 
+        DrawGround(ren, &levels[currentLevel]);
         DrawRocket(ren,
                    (int)roundf(rocket1.position.x),
                    (int)roundf(rocket1.position.y),
                    rocket1.angle,
                    rocket1.size);
 
-        // Print rocket1 stats
+        // HUD
         char fuelText[32];
         snprintf(fuelText, sizeof(fuelText), "Fuel: %.1f kg", rocket1.fuel);
         stringRGBA(ren, 10, 10, fuelText, 255, 255, 255, 255);
-
         char thrustText[32];
         snprintf(thrustText, sizeof(thrustText), "Thrust: %.1f", rocket1.thrustLevel);
         stringRGBA(ren, 10, 20, thrustText, 255, 255, 255, 255);
-
 
         SDL_RenderPresent(ren);
         SDL_Delay((Uint32)(dt * 1000));
