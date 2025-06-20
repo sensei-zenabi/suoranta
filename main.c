@@ -166,10 +166,15 @@ int main(int argc, char *argv[])
                    rocket1.angle,
                    rocket1.size);
 
-        // Print remaining fuel
+        // Print rocket1 stats
         char fuelText[32];
         snprintf(fuelText, sizeof(fuelText), "Fuel: %.1f kg", rocket1.fuel);
         stringRGBA(ren, 10, 10, fuelText, 255, 255, 255, 255);
+
+        char thrustText[32];
+        snprintf(thrustText, sizeof(thrustText), "Thrust: %.1f", rocket1.thrustLevel);
+        stringRGBA(ren, 10, 20, thrustText, 255, 255, 255, 255);
+
 
         SDL_RenderPresent(ren);
         SDL_Delay((Uint32)(dt * 1000));
