@@ -39,6 +39,10 @@ typedef struct {
     int     size;                // px (line length)
 } Rocket;
 
+typedef struct {
+    float gravity;
+} World;
+
 //=============================================================================
 // DRAWING:
 
@@ -107,8 +111,13 @@ int main(int argc, char *argv[])
     // Retro 320×240 scaling
     SDL_RenderSetLogicalSize(ren, 320, 240);
 
-    // Initialize rocket
-    Rocket rocket = {
+    // Initialize world
+    World world = {
+        .gravity            = 9.82f
+    };
+
+    // Initialize rocket1
+    Rocket rocket1 = {
         .position           = {160.0f, 120.0f},
         .velocity           = {  0.0f,   0.0f},
         .acceleration       = {  0.0f,   0.0f},
@@ -148,54 +157,55 @@ int main(int argc, char *argv[])
         const Uint8 *keys = SDL_GetKeyboardState(NULL);
         // Angular control
         if (keys[SDL_SCANCODE_LEFT]) {
-            rocket.angularVelocity = -rotVelocity;
+            rocket1.angularVelocity = -rotVelocity;
         }
         else if (keys[SDL_SCANCODE_RIGHT]) {
-            rocket.angularVelocity = rotVelocity;
+            rocket1.angularVelocity = rotVelocity;
         }
         else {
-            rocket.angularVelocity = 0.0f;
+            rocket1.angularVelocity = 0.0f;
         }
         // Throttle
-        if (keys[SDL_SCANCODE_UP] && rocket.fuel > 0.0f) {
-            rocket.thrustLevel = -1.0f;
+        if (keys[SDL_SCANCODE_UP] && rocket1.fuel > 0.0f) {
+            rocket1.thrustLevel = -1.0f;
         } else {
-            rocket.thrustLevel = 0.0f;
+            rocket1.thrustLevel = 0.0f;
         }
 
         // 3) Physics integration
         // Angular acceleration is bypassed
-        // rocket.angularVelocity    += rocket.angularAcceleration * dt;
-        // rocket.angle              += rocket.angularVelocity    * dt;
-		rocket.angle 				 += rocket.angularVelocity * dt;
+        // rocket1.angularVelocity    += rocket1.angularAcceleration * dt;
+        // rocket1.angle              += rocket1.angularVelocity    * dt;
+        rocket1.angle                 += rocket1.angularVelocity * dt;
 
         // Linear: thrust
-        float thrustForce = rocket.maxThrust * rocket.thrustLevel;
-        double rad = degToRad(rocket.angle);
-        rocket.acceleration.x = cos(rad) * thrustForce / rocket.mass;
-        rocket.acceleration.y = sin(rad) * thrustForce / rocket.mass;
+        float thrustForce = rocket1.maxThrust * rocket1.thrustLevel;
+        double rad = degToRad(rocket1.angle);
+        rocket1.acceleration.x = cos(rad) * thrustForce / rocket1.mass;
+        rocket1.acceleration.y = sin(rad) * thrustForce / rocket1.mass;
 
         // Simple quadratic drag: F_drag ≈ –Cd·v·|v|
-        rocket.acceleration.x -= rocket.dragCoefficient
-                                * rocket.velocity.x
-                                * fabsf(rocket.velocity.x);
-        rocket.acceleration.y -= rocket.dragCoefficient
-                                * rocket.velocity.y
-                                * fabsf(rocket.velocity.y);
+        rocket1.acceleration.x -= rocket1.dragCoefficient
+                                * rocket1.velocity.x
+                                * fabsf(rocket1.velocity.x);
+        rocket1.acceleration.y -= rocket1.dragCoefficient
+                                * rocket1.velocity.y
+                                * fabsf(rocket1.velocity.y);
+        rocket1.acceleration.y += world.gravity;
 
         // Integrate velocity & position
-        rocket.velocity.x   += rocket.acceleration.x * dt;
-        rocket.velocity.y   += rocket.acceleration.y * dt;
-        rocket.position.x   += rocket.velocity.x    * dt;
-        rocket.position.y   += rocket.velocity.y    * dt;
+        rocket1.velocity.x   += rocket1.acceleration.x * dt;
+        rocket1.velocity.y   += rocket1.acceleration.y * dt;
+        rocket1.position.x   += rocket1.velocity.x    * dt;
+        rocket1.position.y   += rocket1.velocity.y    * dt;
 
         // Fuel burn
-        rocket.fuel -= rocket.fuelConsumption
-                      * rocket.thrustLevel
+        rocket1.fuel -= rocket1.fuelConsumption
+                      * rocket1.thrustLevel
                       * dt;
-        if (rocket.fuel < 0.0f) {
-            rocket.fuel = 0.0f;
-            rocket.thrustLevel = 0.0f;
+        if (rocket1.fuel < 0.0f) {
+            rocket1.fuel = 0.0f;
+            rocket1.thrustLevel = 0.0f;
         }
 
         // 4) Render
@@ -204,10 +214,10 @@ int main(int argc, char *argv[])
 
         SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);
         DrawRocket(ren,
-                   (int)roundf(rocket.position.x),
-                   (int)roundf(rocket.position.y),
-                   rocket.angle,
-                   rocket.size);
+                   (int)roundf(rocket1.position.x),
+                   (int)roundf(rocket1.position.y),
+                   rocket1.angle,
+                   rocket1.size);
 
         SDL_RenderPresent(ren);
 
