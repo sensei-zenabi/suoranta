@@ -116,17 +116,17 @@ int main(int argc, char *argv[])
         .angularVelocity    =   0.0f,
         .angularAcceleration=   0.0f,
         .mass               =   1.0f,
-        .maxThrust          =  50.0f,
+        .maxThrust          = 100.0f,
         .thrustLevel        =   0.0f,
         .dragCoefficient    =   0.05f,
         .frontalArea        =   0.01f,
         .fuel               =  20.0f,
         .fuelConsumption    =   1.0f,
-        .size               =  15
+        .size               =  10
     };
 
     const float dt = 1.0f / 60.0f;   // fixed timestep ~60 FPS
-    const float rotAccel = 120.0f;   // deg/sec² when ◀️/▶️ held
+    const float rotVelocity = 120.0f;   // deg/sec² when ◀️/▶️ held
 
     int running = 1;
     SDL_Event ev;
@@ -148,13 +148,13 @@ int main(int argc, char *argv[])
         const Uint8 *keys = SDL_GetKeyboardState(NULL);
         // Angular control
         if (keys[SDL_SCANCODE_LEFT]) {
-            rocket.angularAcceleration = -rotAccel;
+            rocket.angularVelocity = -rotVelocity;
         }
         else if (keys[SDL_SCANCODE_RIGHT]) {
-            rocket.angularAcceleration = rotAccel;
+            rocket.angularVelocity = rotVelocity;
         }
         else {
-            rocket.angularAcceleration = 0.0f;
+            rocket.angularVelocity = 0.0f;
         }
         // Throttle
         if (keys[SDL_SCANCODE_UP] && rocket.fuel > 0.0f) {
@@ -164,9 +164,10 @@ int main(int argc, char *argv[])
         }
 
         // 3) Physics integration
-        // Angular
-        rocket.angularVelocity    += rocket.angularAcceleration * dt;
-        rocket.angle              += rocket.angularVelocity    * dt;
+        // Angular acceleration is bypassed
+        // rocket.angularVelocity    += rocket.angularAcceleration * dt;
+        // rocket.angle              += rocket.angularVelocity    * dt;
+		rocket.angle 				 += rocket.angularVelocity * dt;
 
         // Linear: thrust
         float thrustForce = rocket.maxThrust * rocket.thrustLevel;
