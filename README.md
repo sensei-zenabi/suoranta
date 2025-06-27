@@ -1,4 +1,4 @@
-## [Time] Aristotle, 4th Century BCE
+### [Time] Aristotle, 4th Century BCE
 
 Aristotle tied time to change and motion—“Time is the number of movement in respect of before and after.”
 - Physics, Book IV
