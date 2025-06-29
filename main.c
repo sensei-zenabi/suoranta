@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
         SDL_WINDOWPOS_CENTERED,
         320,
         200,
-        SDL_WINDOW_FULLSCREEN_DESKTOP);
+        SDL_WINDOW_SHOWN);
                 
     if (!window) {
         fprintf(stderr, "CreateWindow Error: %s\n", SDL_GetError());
@@ -37,6 +37,7 @@ int main(int argc, char* argv[]) {
     // Start in fullscreen mode
     ToggleFullscreen(window);
 
+	// *** INITIALIZE SCENE 1 ***
     SDL_Texture* background = LoadBackground("assets/room_000.png", renderer);
     if (!background) return 1;
 

@@ -6,11 +6,15 @@
 
 void ToggleFullscreen(SDL_Window* window) {
     if (!window) return;
-    Uint32 fullscreenFlag = SDL_WINDOW_FULLSCREEN_DESKTOP;
+    Uint32 fullscreenFlag = SDL_WINDOW_FULLSCREEN;
     bool isFullscreen = SDL_GetWindowFlags(window) & fullscreenFlag;
     if (isFullscreen) {
         SDL_SetWindowFullscreen(window, 0);
     } else {
+        SDL_DisplayMode mode = {0};
+        mode.w = 320;
+        mode.h = 200;
+        SDL_SetWindowDisplayMode(window, &mode);
         SDL_SetWindowFullscreen(window, fullscreenFlag);
     }
 }
