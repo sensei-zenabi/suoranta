@@ -41,9 +41,13 @@ int main(int argc, char* argv[]) {
     SDL_Texture* background = LoadBackground("assets/room_000.png", renderer);
     if (!background) return 1;
 
+    const int FPS = 24;
+    const int frameDelay = 1000 / FPS;
+
     bool running = true;
     SDL_Event e;
     while (running) {
+        Uint32 frameStart = SDL_GetTicks();
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT) running = false;
         }
@@ -51,6 +55,11 @@ int main(int argc, char* argv[]) {
         SDL_RenderClear(renderer);
         RenderBackground(background, renderer, 320);
         SDL_RenderPresent(renderer);
+
+        Uint32 frameTime = SDL_GetTicks() - frameStart;
+        if (frameTime < (Uint32)frameDelay) {
+            SDL_Delay(frameDelay - frameTime);
+        }
     }
 
     SDL_DestroyTexture(background);
