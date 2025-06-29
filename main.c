@@ -15,7 +15,14 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    SDL_Window* window = SDL_CreateWindow("SDL Background Example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, 0);
+    SDL_Window* window = SDL_CreateWindow(
+        "SDL Background Example",
+        SDL_WINDOWPOS_CENTERED,
+        SDL_WINDOWPOS_CENTERED,
+        320,
+        200,
+        SDL_WINDOW_FULLSCREEN);
+                
     if (!window) {
         fprintf(stderr, "CreateWindow Error: %s\n", SDL_GetError());
         return 1;
@@ -26,6 +33,9 @@ int main(int argc, char* argv[]) {
         fprintf(stderr, "CreateRenderer Error: %s\n", SDL_GetError());
         return 1;
     }
+
+    // Start in fullscreen mode
+    ToggleFullscreen(window);
 
     SDL_Texture* background = LoadBackground("assets/room_000.png", renderer);
     if (!background) return 1;
@@ -38,7 +48,7 @@ int main(int argc, char* argv[]) {
         }
 
         SDL_RenderClear(renderer);
-        RenderBackground(background, renderer);
+        RenderBackground(background, renderer, 320);
         SDL_RenderPresent(renderer);
     }
 
