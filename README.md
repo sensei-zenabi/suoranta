@@ -1,10 +1,18 @@
-### [Time] Aristotle, 4th Century BCE
+# Suoranta SDL Example
 
-Aristotle tied time to change and motion—“Time is the number of movement in respect of before and after.”
-- Physics, Book IV
+This repository contains a minimal SDL2 program that toggles exclusive fullscreen mode at 320x200.
 
-Motion defines time: Time doesn’t exist independently—it's a way to measure motion or change.
+## Building
 
-Relative and sequential: Time involves a "before" and "after"—a sequence of states, not a thing on its own.
+Install development libraries:
+```bash
+sudo apt-get update
+sudo apt-get install -y libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
+```
+Then compile with `make`.
 
-No empty time: For Aristotle, if nothing changes, there’s no time.
+Place `assets/room_000.png` in an `assets` folder next to the executable. Run the program:
+```bash
+./game
+```
+Note that it requires a graphical environment. Running without a display may produce `XDG_RUNTIME_DIR` errors.
