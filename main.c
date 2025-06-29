@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
         SDL_WINDOWPOS_CENTERED,
         320,
         200,
-        SDL_WINDOW_FULLSCREEN);
+        SDL_WINDOW_FULLSCREEN_DESKTOP);
                 
     if (!window) {
         fprintf(stderr, "CreateWindow Error: %s\n", SDL_GetError());
