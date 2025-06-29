@@ -5,6 +5,10 @@
 #include "graphics.h"
 
 int main(int argc, char* argv[]) {
+
+	//============================================================================
+	// INITIALIZE GAME ENGINE:
+
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         fprintf(stderr, "SDL_Init Error: %s\n", SDL_GetError());
         return 1;
@@ -37,13 +41,34 @@ int main(int argc, char* argv[]) {
     // Start in fullscreen mode
     ToggleFullscreen(window);
 
-	// *** INITIALIZE SCENE 1 ***
+	// Set FPS
+	const int FPS = 24;
+	const int frameDelay = 1000 / FPS;
+
+	//============================================================================
+	// INITIALIZE SCENE 1
+
+	// Load assets	
     SDL_Texture* background = LoadBackground("assets/room_000.png", renderer);
     if (!background) return 1;
 
-    const int FPS = 24;
-    const int frameDelay = 1000 / FPS;
+	// Scene content
+    void executeScene1() {
+		static float backgroundY = -75;
+		const int backgroundMaxY = -65;
+		const int backgroundMinY = -75;
+		const float yScrollRate = 0.025f;
+		
+    	RenderBackground(background, renderer, 320, 0, (int)backgroundY);
 
+		if (backgroundY < backgroundMaxY && backgroundY >= backgroundMinY) {
+			backgroundY = backgroundY + yScrollRate;	
+		}
+    }
+
+    //============================================================================
+    // GAME LOOP
+    
     bool running = true;
     SDL_Event e;
     while (running) {
@@ -53,14 +78,21 @@ int main(int argc, char* argv[]) {
         }
 
         SDL_RenderClear(renderer);
-        RenderBackground(background, renderer, 320);
-        SDL_RenderPresent(renderer);
+		//=======================================================================
+		// GAME SCENE CONTENT HERE
+		
+        executeScene1();
 
+		//=======================================================================
+        SDL_RenderPresent(renderer);
         Uint32 frameTime = SDL_GetTicks() - frameStart;
         if (frameTime < (Uint32)frameDelay) {
             SDL_Delay(frameDelay - frameTime);
         }
     }
+
+	//============================================================================
+	// CLEAN EXIT - Free Memories etc.
 
     SDL_DestroyTexture(background);
     SDL_DestroyRenderer(renderer);

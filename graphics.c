@@ -28,14 +28,16 @@ SDL_Texture* LoadBackground(const char* filepath, SDL_Renderer* renderer) {
     return background;
 }
 
-void RenderBackground(SDL_Texture* background, SDL_Renderer* renderer, int width) {       
+void RenderBackground(SDL_Texture* background, SDL_Renderer* renderer,
+                      int width, int x, int y) {
     int texW = 0, texH = 0;
     SDL_QueryTexture(background, NULL, NULL, &texW, &texH);
 
-    SDL_Rect dst = {0, 0, texW, texH};
+    SDL_Rect dst = {x, y, texW, texH};
     if (width > 0) {
         dst.w = width;
         dst.h = (int)((double)texH * width / texW);
     }
 
-    SDL_RenderCopy(renderer, background, NULL, &dst);}
+    SDL_RenderCopy(renderer, background, NULL, &dst);
+}
