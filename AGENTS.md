@@ -5,5 +5,4 @@
 - Use `make` to build the `game` executable.
 
 ## Running
-- Run `./game`. The program expects `assets/room_000.png` to exist.
-- A valid X11/Wayland session is required; running inside headless environments may fail with `XDG_RUNTIME_DIR` errors.
+- Do not run the game, only build it to see if build errors exist
