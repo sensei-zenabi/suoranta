@@ -44,7 +44,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    TTF_Font* font = TTF_OpenFont("fonts/amiga4ever.ttf", 12);
+    TTF_Font* font = TTF_OpenFont("fonts/amiga4ever pro2.ttf", 12);
     if (!font) {
         fprintf(stderr, "TTF_OpenFont Error: %s\n", TTF_GetError());
         return 1;
