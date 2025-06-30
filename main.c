@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "graphics.h"
+#include "time.h"
 
 int main(int argc, char* argv[]) {
 
@@ -60,6 +61,10 @@ int main(int argc, char* argv[]) {
 	//============================================================================
 	// INITIALIZE SCENE 1
 
+    TimeCounter sceneTimer;
+    TimeCounter_Init(&sceneTimer);
+    TimeCounter_Start(&sceneTimer);
+
 	// Load assets	
     SDL_Texture* background = LoadBackground("assets/room_000.png", renderer);
     if (!background) return 1;
@@ -70,12 +75,18 @@ int main(int argc, char* argv[]) {
 		const int backgroundMaxY = -65;
 		const int backgroundMinY = -75;
 		const float yScrollRate = 0.025f;
+
+		double seconds = TimeCounter_GetElapsed(&sceneTimer);
 		
     	RenderBackground(background, renderer, 320, 0, (int)backgroundY);
 
 		if (backgroundY < backgroundMaxY && backgroundY >= backgroundMinY) {
 			backgroundY = backgroundY + yScrollRate;	
 		}
+
+		if (seconds > 5) { RenderTopBarText(renderer, font, 
+						   "Time has elapsed!", 320, 20); }
+		if (seconds > 10) { TimeCounter_Reset(&sceneTimer); }
     }
 
     //============================================================================
@@ -94,7 +105,6 @@ int main(int argc, char* argv[]) {
 		// GAME SCENE CONTENT HERE
 		
         executeScene1();
-        RenderTopBarText(renderer, font, "Suoranta Synthwave", 320, 20);
 
 		//=======================================================================
         SDL_RenderPresent(renderer);
@@ -106,6 +116,8 @@ int main(int argc, char* argv[]) {
 
 	//============================================================================
 	// CLEAN EXIT - Free Memories etc.
+
+	TimeCounter_Stop(&sceneTimer);
 
     SDL_DestroyTexture(background);
     TTF_CloseFont(font);
