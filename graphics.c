@@ -3,6 +3,7 @@
 #include <SDL_image.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <SDL_ttf.h>
 
 void ToggleFullscreen(SDL_Window* window) {
     if (!window) return;
@@ -40,4 +41,28 @@ void RenderBackground(SDL_Texture* background, SDL_Renderer* renderer,
     }
 
     SDL_RenderCopy(renderer, background, NULL, &dst);
+}
+
+void RenderTopBarText(SDL_Renderer* renderer, TTF_Font* font, const char* text,
+                      int windowWidth, int barHeight) {
+    if (!renderer || !font || !text) return;
+
+    SDL_Rect bar = {0, 0, windowWidth, barHeight};
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderFillRect(renderer, &bar);
+
+    SDL_Color color = {255, 255, 255, 255};
+    SDL_Surface* surface = TTF_RenderUTF8_Blended(font, text, color);
+    if (!surface) return;
+
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    int texW = surface->w;
+    int texH = surface->h;
+    SDL_FreeSurface(surface);
+
+    if (!texture) return;
+
+    SDL_Rect dst = {(windowWidth - texW) / 2, (barHeight - texH) / 2, texW, texH};
+    SDL_RenderCopy(renderer, texture, NULL, &dst);
+    SDL_DestroyTexture(texture);
 }

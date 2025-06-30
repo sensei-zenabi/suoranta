@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include "graphics.h"
@@ -11,6 +12,11 @@ int main(int argc, char* argv[]) {
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         fprintf(stderr, "SDL_Init Error: %s\n", SDL_GetError());
+        return 1;
+    }
+
+    if (TTF_Init() == -1) {
+        fprintf(stderr, "TTF_Init Error: %s\n", TTF_GetError());
         return 1;
     }
 
@@ -35,6 +41,12 @@ int main(int argc, char* argv[]) {
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (!renderer) {
         fprintf(stderr, "CreateRenderer Error: %s\n", SDL_GetError());
+        return 1;
+    }
+
+    TTF_Font* font = TTF_OpenFont("fonts/amiga4ever.ttf", 12);
+    if (!font) {
+        fprintf(stderr, "TTF_OpenFont Error: %s\n", TTF_GetError());
         return 1;
     }
 
@@ -82,6 +94,7 @@ int main(int argc, char* argv[]) {
 		// GAME SCENE CONTENT HERE
 		
         executeScene1();
+        RenderTopBarText(renderer, font, "Suoranta Synthwave", 320, 20);
 
 		//=======================================================================
         SDL_RenderPresent(renderer);
@@ -95,9 +108,11 @@ int main(int argc, char* argv[]) {
 	// CLEAN EXIT - Free Memories etc.
 
     SDL_DestroyTexture(background);
+    TTF_CloseFont(font);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     IMG_Quit();
+    TTF_Quit();
     SDL_Quit();
     return 0;
 }
