@@ -65,21 +65,14 @@ int main(int argc, char* argv[]) {
     TimeCounter_Init(&sceneTimer);
     TimeCounter_Start(&sceneTimer);
 
-	// Load assets	
-    SDL_Texture* background = LoadBackground("assets/room_000.png", renderer);
-    if (!background) return 1;
-
 	// Scene content
-    void executeScene1() {
-		static float backgroundY = -75;
-		const int rainGroundYMin = 180;
-        const int rainGroundYMax = 240;
-
-		double seconds = TimeCounter_GetElapsed(&sceneTimer);
+    void executeScene1(double seconds) {
 
 		if (seconds < 28) {
-        	RenderBackground(background, renderer, 320, 0, (int)backgroundY);
-        	RenderRain(renderer, 320, rainGroundYMin, rainGroundYMax);
+		    SDL_Texture* background = LoadBackground("assets/room_000.png", renderer);
+        	RenderBackground(background, renderer, 320, 0, -75);
+        	RenderRain(renderer, 320, 180, 240);
+		    SDL_DestroyTexture(background);
         }
         
 		if (seconds > 0) { RenderTopBarText(renderer, font, 
@@ -88,7 +81,21 @@ int main(int argc, char* argv[]) {
 						   "I had not felt so alone for a long time.", 320, 15); }
 		if (seconds > 20) { RenderTopBarText(renderer, font, 
 						   "Sometimes I wondered why I even took this job.", 320, 15); }
-		    
+    }
+
+    void executeScene2(double seconds) {
+		static int yPos = -100;
+		
+		if (seconds >= 30 && seconds < 50) {
+			SDL_Texture* background = LoadBackground("assets/room_001.png", renderer);
+        	RenderBackground(background, renderer, 320, 0, yPos);
+        	RenderRain(renderer, 320, 220, 240);
+        	SDL_DestroyTexture(background);
+        	yPos = yPos + 0.01;
+        }
+
+		if (seconds > 30) { RenderTopBarText(renderer, font, 
+						    "Today I really felt dead inside...", 320, 15); }		    
     }
 
     //============================================================================
@@ -105,8 +112,10 @@ int main(int argc, char* argv[]) {
         SDL_RenderClear(renderer);
 		//=======================================================================
 		// GAME SCENE CONTENT HERE
-		
-        executeScene1();
+
+		double seconds = TimeCounter_GetElapsed(&sceneTimer);		
+        executeScene1(seconds);
+        executeScene2(seconds);
 
 		//=======================================================================
         SDL_RenderPresent(renderer);
@@ -121,7 +130,6 @@ int main(int argc, char* argv[]) {
 
 	TimeCounter_Stop(&sceneTimer);
 
-    SDL_DestroyTexture(background);
     TTF_CloseFont(font);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
