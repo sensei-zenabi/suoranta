@@ -75,11 +75,12 @@ int main(int argc, char* argv[]) {
 		const int backgroundMaxY = -65;
 		const int backgroundMinY = -75;
 		const float yScrollRate = 0.025f;
+		const int rainGroundY = 220;
 
 		double seconds = TimeCounter_GetElapsed(&sceneTimer);
-		
-    	RenderBackground(background, renderer, 320, 0, (int)backgroundY);
-
+        RenderBackground(background, renderer, 320, 0, (int)backgroundY);
+        RenderRain(renderer, 320, rainGroundY);
+        
 		if (backgroundY < backgroundMaxY && backgroundY >= backgroundMinY) {
 			backgroundY = backgroundY + yScrollRate;	
 		}

@@ -4,6 +4,9 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <SDL_ttf.h>
+#include <stdlib.h>
+
+#define MAX_RAIN_DROPS 100
 
 void ToggleFullscreen(SDL_Window* window) {
     if (!window) return;
@@ -65,4 +68,36 @@ void RenderTopBarText(SDL_Renderer* renderer, TTF_Font* font, const char* text,
     SDL_Rect dst = {(windowWidth - texW) / 2, (barHeight - texH) / 2, texW, texH};
     SDL_RenderCopy(renderer, texture, NULL, &dst);
     SDL_DestroyTexture(texture);
+}
+
+typedef struct {
+    float x;
+    float y;
+    float speed;
+} RainDrop;
+
+void RenderRain(SDL_Renderer* renderer, int windowWidth, int groundY) {
+    static RainDrop drops[MAX_RAIN_DROPS];
+    static bool initialized = false;
+    if (!initialized) {
+        srand((unsigned)SDL_GetTicks());
+        for (int i = 0; i < MAX_RAIN_DROPS; ++i) {
+            drops[i].x = (float)(rand() % windowWidth);
+            drops[i].y = -(float)(rand() % 20);
+            drops[i].speed = 2.0f + (float)(rand() % 3);
+        }
+        initialized = true;
+    }
+
+    SDL_SetRenderDrawColor(renderer, 150, 150, 255, 255);
+    for (int i = 0; i < MAX_RAIN_DROPS; ++i) {
+        SDL_RenderDrawLine(renderer, (int)drops[i].x, (int)drops[i].y,
+                           (int)drops[i].x, (int)(drops[i].y + 4));
+        drops[i].y += drops[i].speed;
+        if (drops[i].y > groundY) {
+            drops[i].x = (float)(rand() % windowWidth);
+            drops[i].y = -(float)(rand() % 20 + 10);
+            drops[i].speed = 2.0f + (float)(rand() % 3);
+        }
+    }
 }

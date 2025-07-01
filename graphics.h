@@ -26,4 +26,9 @@ void RenderBackground(SDL_Texture* background, SDL_Renderer* renderer,
 void RenderTopBarText(SDL_Renderer* renderer, TTF_Font* font, const char* text,
                       int windowWidth, int barHeight);
 
+// Renders an animated rain effect. Drops start above the screen and fall until
+// reaching "groundY" where they reset to the top. "windowWidth" specifies the
+// horizontal range for the rain. Use this to add ambience to scenes.
+void RenderRain(SDL_Renderer* renderer, int windowWidth, int groundY);
+
 #endif
