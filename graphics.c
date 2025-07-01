@@ -74,17 +74,21 @@ typedef struct {
     float x;
     float y;
     float speed;
+    float groundY;  // vertical position where this drop resets
 } RainDrop;
 
-void RenderRain(SDL_Renderer* renderer, int windowWidth, int groundY) {
+void RenderRain(SDL_Renderer* renderer, int windowWidth,
+                int groundYMin, int groundYMax) {
     static RainDrop drops[MAX_RAIN_DROPS];
     static bool initialized = false;
     if (!initialized) {
         srand((unsigned)SDL_GetTicks());
         for (int i = 0; i < MAX_RAIN_DROPS; ++i) {
             drops[i].x = (float)(rand() % windowWidth);
-            drops[i].y = -(float)(rand() % 20);
+            drops[i].y = -(float)(rand() % 20 + 10);
             drops[i].speed = 2.0f + (float)(rand() % 3);
+            drops[i].groundY =
+                (float)(groundYMin + rand() % (groundYMax - groundYMin + 1));
         }
         initialized = true;
     }
@@ -94,10 +98,12 @@ void RenderRain(SDL_Renderer* renderer, int windowWidth, int groundY) {
         SDL_RenderDrawLine(renderer, (int)drops[i].x, (int)drops[i].y,
                            (int)drops[i].x, (int)(drops[i].y + 4));
         drops[i].y += drops[i].speed;
-        if (drops[i].y > groundY) {
+        if (drops[i].y > drops[i].groundY) {
             drops[i].x = (float)(rand() % windowWidth);
             drops[i].y = -(float)(rand() % 20 + 10);
             drops[i].speed = 2.0f + (float)(rand() % 3);
+            drops[i].groundY =
+                (float)(groundYMin + rand() % (groundYMax - groundYMin + 1));
         }
     }
 }
