@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    TTF_Font* font = TTF_OpenFont("fonts/amiga4ever pro2.ttf", 12);
+    TTF_Font* font = TTF_OpenFont("fonts/amiga4ever pro2.ttf", 8);
     if (!font) {
         fprintf(stderr, "TTF_OpenFont Error: %s\n", TTF_GetError());
         return 1;
@@ -72,24 +72,23 @@ int main(int argc, char* argv[]) {
 	// Scene content
     void executeScene1() {
 		static float backgroundY = -75;
-		const int backgroundMaxY = -65;
-		const int backgroundMinY = -75;
-		const float yScrollRate = 0.025f;
 		const int rainGroundYMin = 180;
         const int rainGroundYMax = 240;
 
 		double seconds = TimeCounter_GetElapsed(&sceneTimer);
 
-        RenderBackground(background, renderer, 320, 0, (int)backgroundY);
-        RenderRain(renderer, 320, rainGroundYMin, rainGroundYMax);
+		if (seconds < 28) {
+        	RenderBackground(background, renderer, 320, 0, (int)backgroundY);
+        	RenderRain(renderer, 320, rainGroundYMin, rainGroundYMax);
+        }
         
-		if (backgroundY < backgroundMaxY && backgroundY >= backgroundMinY) {
-			backgroundY = backgroundY + yScrollRate;	
-		}
-
-		if (seconds > 5) { RenderTopBarText(renderer, font, 
-						   "Time has elapsed!", 320, 20); }
-		if (seconds > 10) { TimeCounter_Reset(&sceneTimer); }
+		if (seconds > 0) { RenderTopBarText(renderer, font, 
+						   "It was a rainy night in Delta Sector...", 320, 15); }
+		if (seconds > 10) { RenderTopBarText(renderer, font, 
+						   "I had not felt so alone for a long time.", 320, 15); }
+		if (seconds > 20) { RenderTopBarText(renderer, font, 
+						   "Sometimes I wondered why I even took this job.", 320, 15); }
+		    
     }
 
     //============================================================================
