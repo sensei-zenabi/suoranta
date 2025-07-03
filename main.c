@@ -57,6 +57,7 @@ int main(int argc, char* argv[]) {
 	// Set FPS
 	const int FPS = 24;
 	const int frameDelay = 1000 / FPS;
+	const int topBarHeight = 20;
 
 	//============================================================================
 	// INITIALIZE SCENE 1
@@ -76,26 +77,26 @@ int main(int argc, char* argv[]) {
         }
         
 		if (seconds > 0) { RenderTopBarText(renderer, font, 
-						   "It was a rainy night in Delta Sector...", 320, 15); }
+						   "It was a rainy night in Delta Sector...", 320, topBarHeight); }
 		if (seconds > 10) { RenderTopBarText(renderer, font, 
-						   "I had not felt so alone for a long time.", 320, 15); }
+						   "World has finally reached it's breaking point.", 320, topBarHeight); }
 		if (seconds > 20) { RenderTopBarText(renderer, font, 
-						   "Sometimes I wondered why I even took this job.", 320, 15); }
+						   "Decline starts to be hard to hide.\nNobody cares anymore...", 320, topBarHeight); }
     }
 
     void executeScene2(double seconds) {
 		static int yPos = -100;
 		
-		if (seconds >= 30 && seconds < 50) {
+		if (seconds >= 30 && seconds < 35) {
 			SDL_Texture* background = LoadBackground("assets/room_001.png", renderer);
         	RenderBackground(background, renderer, 320, 0, yPos);
         	RenderRain(renderer, 320, 220, 240);
         	SDL_DestroyTexture(background);
-        	yPos = yPos + 0.01;
+        	yPos = yPos + 0.00001;
         }
 
 		if (seconds > 30) { RenderTopBarText(renderer, font, 
-						    "Today I really felt dead inside...", 320, 15); }		    
+						    "AI is like cancer.\nSlowly eating people's brains...", 320, topBarHeight); }		    
     }
 
     //============================================================================

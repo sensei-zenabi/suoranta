@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <SDL_ttf.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX_RAIN_DROPS 100
 
@@ -55,19 +56,51 @@ void RenderTopBarText(SDL_Renderer* renderer, TTF_Font* font, const char* text,
     SDL_RenderFillRect(renderer, &bar);
 
     SDL_Color color = {255, 255, 255, 255};
-    SDL_Surface* surface = TTF_RenderUTF8_Blended(font, text, color);
-    if (!surface) return;
+    // Duplicate the string so we can modify it when splitting lines
+    char* textCopy = SDL_strdup(text);
+    if (!textCopy) return;
 
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-    int texW = surface->w;
-    int texH = surface->h;
-    SDL_FreeSurface(surface);
+    // Parse lines separated by '\n'
+    const int MAX_LINES = 32;
+    char* lines[MAX_LINES];
+    int lineCount = 0;
+    
+    char* saveptr = NULL;
+    char* token = strtok_r(textCopy, "\n", &saveptr);
+    while (token && lineCount < MAX_LINES) {
+        lines[lineCount++] = token;
+        token = strtok_r(NULL, "\n", &saveptr);
+    }
 
-    if (!texture) return;
+    SDL_Texture* textures[MAX_LINES];
+    int widths[MAX_LINES];
+    int heights[MAX_LINES];
+    int totalHeight = 0;
 
-    SDL_Rect dst = {(windowWidth - texW) / 2, (barHeight - texH) / 2, texW, texH};
-    SDL_RenderCopy(renderer, texture, NULL, &dst);
-    SDL_DestroyTexture(texture);
+    for (int i = 0; i < lineCount; ++i) {
+        SDL_Surface* surface = TTF_RenderUTF8_Blended(font, lines[i], color);
+        if (!surface) {
+            textures[i] = NULL;
+            widths[i] = heights[i] = 0;
+            continue;
+        }
+        textures[i] = SDL_CreateTextureFromSurface(renderer, surface);
+        widths[i] = surface->w;
+        heights[i] = surface->h;
+        totalHeight += heights[i];
+        SDL_FreeSurface(surface);
+    }
+
+    int y = (barHeight - totalHeight) / 2;
+    for (int i = 0; i < lineCount; ++i) {
+        if (!textures[i]) continue;
+        SDL_Rect dst = {(windowWidth - widths[i]) / 2, y, widths[i], heights[i]};
+        SDL_RenderCopy(renderer, textures[i], NULL, &dst);
+        SDL_DestroyTexture(textures[i]);
+        y += heights[i];
+    }
+
+    SDL_free(textCopy);
 }
 
 typedef struct {
