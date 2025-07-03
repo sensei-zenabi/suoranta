@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
     ToggleFullscreen(window);
 
 	// Set FPS
-	const int FPS = 24;
+	const int FPS = 20;
 	const int frameDelay = 1000 / FPS;
 	const int topBarHeight = 20;
 	const int secondOffset = 30;
@@ -103,7 +103,7 @@ int main(int argc, char* argv[]) {
 	void executeScene3(double seconds) {
 		static int yPos = -180;
 		
-		if (seconds >= 35 && seconds < 40) {
+		if (seconds >= 34 && seconds < 39) {
 			SDL_Texture* background = LoadBackground("assets/room_002.png", renderer);
         	RenderBackground(background, renderer, 320, 0, yPos);
         	RenderRain(renderer, 320, 220, 240);
@@ -111,9 +111,23 @@ int main(int argc, char* argv[]) {
         	yPos = yPos + 0.00001;
         }
 
-		if (seconds > 35) { RenderTopBarText(renderer, font, 
+		if (seconds > 34) { RenderTopBarText(renderer, font, 
 						    "But who am I to say.\nI stopped caring a long time ago...", 320, topBarHeight); }		    
     }
+
+	void executeScene4(double seconds) {
+		static int yPos = -80;
+		
+		if (seconds >= 39 && seconds < 49) {
+			SDL_Texture* background = LoadBackground("assets/room_003.png", renderer);
+        	RenderBackground(background, renderer, 320, 0, yPos);
+        	SDL_DestroyTexture(background);
+        }
+
+		if (seconds > 39) { RenderTopBarText(renderer, font, 
+						    "Most of the days, I just stare the terminal...", 320, topBarHeight); }		    
+    }
+    
     //============================================================================
     // GAME LOOP
     
@@ -133,6 +147,7 @@ int main(int argc, char* argv[]) {
         executeScene1(seconds);
         executeScene2(seconds);
         executeScene3(seconds);
+        executeScene4(seconds);
 
 		//=======================================================================
         SDL_RenderPresent(renderer);
