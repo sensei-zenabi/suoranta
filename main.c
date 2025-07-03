@@ -58,6 +58,7 @@ int main(int argc, char* argv[]) {
 	const int FPS = 24;
 	const int frameDelay = 1000 / FPS;
 	const int topBarHeight = 20;
+	const int secondOffset = 30;
 
 	//============================================================================
 	// INITIALIZE SCENE 1
@@ -87,7 +88,7 @@ int main(int argc, char* argv[]) {
     void executeScene2(double seconds) {
 		static int yPos = -100;
 		
-		if (seconds >= 30 && seconds < 35) {
+		if (seconds >= 30 && seconds < 34) {
 			SDL_Texture* background = LoadBackground("assets/room_001.png", renderer);
         	RenderBackground(background, renderer, 320, 0, yPos);
         	RenderRain(renderer, 320, 220, 240);
@@ -98,7 +99,21 @@ int main(int argc, char* argv[]) {
 		if (seconds > 30) { RenderTopBarText(renderer, font, 
 						    "AI is like cancer.\nSlowly eating people's brains...", 320, topBarHeight); }		    
     }
+    
+	void executeScene3(double seconds) {
+		static int yPos = -180;
+		
+		if (seconds >= 35 && seconds < 40) {
+			SDL_Texture* background = LoadBackground("assets/room_002.png", renderer);
+        	RenderBackground(background, renderer, 320, 0, yPos);
+        	RenderRain(renderer, 320, 220, 240);
+        	SDL_DestroyTexture(background);
+        	yPos = yPos + 0.00001;
+        }
 
+		if (seconds > 35) { RenderTopBarText(renderer, font, 
+						    "But who am I to say.\nI stopped caring a long time ago...", 320, topBarHeight); }		    
+    }
     //============================================================================
     // GAME LOOP
     
@@ -114,9 +129,10 @@ int main(int argc, char* argv[]) {
 		//=======================================================================
 		// GAME SCENE CONTENT HERE
 
-		double seconds = TimeCounter_GetElapsed(&sceneTimer);		
+		double seconds = TimeCounter_GetElapsed(&sceneTimer) + secondOffset;		
         executeScene1(seconds);
         executeScene2(seconds);
+        executeScene3(seconds);
 
 		//=======================================================================
         SDL_RenderPresent(renderer);
