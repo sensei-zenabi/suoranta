@@ -124,8 +124,33 @@ int main(int argc, char* argv[]) {
         	SDL_DestroyTexture(background);
         }
 
-		if (seconds > 39) { RenderTopBarText(renderer, font, 
-						    "Most of the days, I just stare the terminal...", 320, topBarHeight); }		    
+		if (seconds >= 39 && seconds < 44) { 
+			RenderTopBarText(renderer, font, 
+						     "Most of the days, I just stare the terminal...", 
+						     320, topBarHeight);
+		}
+
+		if (seconds >= 44 && seconds < 49) { 
+ 			RenderTopBarText(renderer, font, 
+				    		"This is strange, this email is not from our deparment.", 
+				    		320, topBarHeight);
+		}		    
+    }
+
+    void executeScene5(double seconds) {
+		static int yPos = -80;
+		
+		if (seconds >= 49) {
+			SDL_Texture* background = LoadBackground("assets/room_004.png", renderer);
+	       	RenderBackground(background, renderer, 320, 0, yPos);
+	       	SDL_DestroyTexture(background);
+        }
+
+		if (seconds >= 49) { 
+			RenderTopBarText(renderer, font, 
+						     "", 
+						     320, topBarHeight);
+		}
     }
     
     //============================================================================
@@ -148,6 +173,7 @@ int main(int argc, char* argv[]) {
         executeScene2(seconds);
         executeScene3(seconds);
         executeScene4(seconds);
+        executeScene5(seconds);
 
 		//=======================================================================
         SDL_RenderPresent(renderer);
