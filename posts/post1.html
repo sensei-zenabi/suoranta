@@ -1,22 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
-    <link rel="stylesheet" href="../style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hello World // Nexus File</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-    <header>
-        <h1>Hello World</h1>
-        <p class="date">August 9, 2025</p>
-    </header>
-    <main>
-        <p>Welcome to my very first blog post! This is a simple blog made with HTML and CSS, perfect for GitHub Pages.</p>
-        <p>You can add more content here, including images, links, and more HTML elements.</p>
-    </main>
-    <footer>
-        <p><a href="../index.html">← Back to home</a></p>
-    </footer>
+  <div class="bg rain"></div>
+  <div class="bg fog"></div>
+  <div class="scanlines"></div>
+
+  <header class="post-header">
+    <h1 class="glitch" data-text="Hello World">Hello World</h1>
+    <p class="meta">Timestamp: 2025-08-09 · Channel: Public</p>
+  </header>
+
+  <article class="post">
+    <p>Welcome to the neon district. This blog skin is pure static HTML/CSS, perfect for GitHub Pages — no build step required.</p>
+    <ul>
+      <li>Neon typography & glow effects</li>
+      <li>Animated rain + drifting fog</li>
+      <li>CRT scanlines for retro feel</li>
+      <li>Glitch headers & cyber chips</li>
+    </ul>
+    <p>Swap text, add images, or embed code blocks — it’s all static.</p>
+    <p class="back"><a href="../index.html">← Back to home</a></p>
+  </article>
+
+  <script>
+    // tiny flicker touch for header
+    const h = document.querySelector('h1');
+    setInterval(()=>h.classList.toggle('flicker'), 900 + Math.random()*600);
+  </script>
 </body>
 </html>
+

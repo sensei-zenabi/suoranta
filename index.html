@@ -1,31 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Blog</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Blade Runner Blog</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <meta name="theme-color" content="#0a0f1f">
 </head>
 <body>
-    <header>
-        <h1>My Blog</h1>
-        <p>Thoughts, notes, and random ramblings</p>
-    </header>
-    <main>
-        <article>
-            <h2><a href="posts/post1.html">Post 1: Hello World</a></h2>
-            <p class="date">August 9, 2025</p>
-            <p>My very first blog post! This is just a sample intro paragraph...</p>
-        </article>
+  <div class="bg rain"></div>
+  <div class="bg fog"></div>
+  <div class="scanlines"></div>
 
-        <article>
-            <h2><a href="posts/post2.html">Post 2: Another Day</a></h2>
-            <p class="date">August 10, 2025</p>
-            <p>More thoughts, more ramblings. Let’s keep going...</p>
-        </article>
-    </main>
-    <footer>
-        <p>© 2025 My Blog</p>
-    </footer>
+  <header class="site-header">
+    <div class="logo glitch" data-text="BUDOSTACK // NEXUS BLOG">BUDOSTACK // NEXUS BLOG</div>
+    <p class="tag">“More human than human.” — Night feed // Sector 7</p>
+    <nav class="nav">
+      <a class="neon-btn" href="./index.html">HOME</a>
+      <a class="neon-btn" href="#about">ABOUT</a>
+      <a class="neon-btn" href="#feed">FEED</a>
+    </nav>
+  </header>
+
+  <main class="container" id="feed">
+    <article class="card">
+      <h2 class="post-title">
+        <a href="posts/post1.html"><span class="jpn">ブレード</span> Post 1: Hello World</a>
+      </h2>
+      <p class="meta">Aug 9, 2025 · Sector: 01 · Clearance: Public</p>
+      <p>First boot sequence. Initiating neon pipeline and rain shader…</p>
+      <a class="chip" href="posts/post1.html">OPEN FILE</a>
+    </article>
+
+    <article class="card">
+      <h2 class="post-title">
+        <a href="posts/post2.html"><span class="jpn">ランナー</span> Post 2: Another Day</a>
+      </h2>
+      <p class="meta">Aug 10, 2025 · Sector: 02 · Clearance: Public</p>
+      <p>Street level telemetry updated. More thoughts under neon skies.</p>
+      <a class="chip" href="posts/post2.html">OPEN FILE</a>
+    </article>
+  </main>
+
+  <section class="about container" id="about">
+    <h3 class="section-title">ABOUT // OPERATOR</h3>
+    <p>
+      This is a static GitHub Pages blog skinned for retro-future noir:
+      neon glows, scanlines, glitch typographics, and a rainy parallax background.
+    </p>
+  </section>
+
+  <footer class="site-footer">
+    <p>© 2025 BUDOSTACK // Off-World Editions</p>
+  </footer>
+
+  <script>
+    // Neon flicker effect on header logo
+    const logo = document.querySelector('.logo');
+    setInterval(() => {
+      const n = Math.random();
+      logo.style.filter = n > 0.8 ? 'brightness(1.4)' : 'none';
+      logo.classList.toggle('flicker', n > 0.85);
+    }, 140);
+
+    // Subtle parallax on mouse move
+    const rain = document.querySelector('.bg.rain');
+    const fog = document.querySelector('.bg.fog');
+    window.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 10;
+      const y = (e.clientY / window.innerHeight - 0.5) * 10;
+      rain.style.transform = `translate(${x}px, ${y}px)`;
+      fog.style.transform = `translate(${-x}px, ${-y}px)`;
+    });
+  </script>
 </body>
 </html>
+
