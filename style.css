@@ -151,7 +151,13 @@ body::before{
 .container{ width:min(960px, 92%); margin: 0 auto; }
 .content{
   flex:1 1 auto;
-  overflow-y:auto;
+  overflow-y: auto;            /* allow vertical scrolling */
+  -ms-overflow-style: none;    /* IE/Edge */
+  scrollbar-width: none;       /* Firefox */
+}
+
+.content::-webkit-scrollbar {
+  display: none;               /* Chrome/Safari/Opera */
 }
 
 /* Cards (posts) */
