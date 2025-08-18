@@ -22,7 +22,10 @@ body{
               var(--bg);
   font-family: "Share Tech Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
   line-height:1.6;
-  overflow-x:hidden;
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+  overflow:hidden;
 }
 
 /* Subtle grid */
@@ -73,6 +76,13 @@ body::before{
 .site-header{
   padding:32px 18px 10px;
   text-align:center;
+  flex-shrink:0;
+}
+
+.site-footer{
+  text-align:center;
+  padding:20px 18px;
+  flex-shrink:0;
 }
 .logo{
   font-family:"Orbitron", system-ui, sans-serif;
@@ -139,6 +149,10 @@ body::before{
 
 /* Layout */
 .container{ width:min(960px, 92%); margin: 0 auto; }
+.content{
+  flex:1 1 auto;
+  overflow-y:auto;
+}
 
 /* Cards (posts) */
 .card{
