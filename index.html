@@ -4,12 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SUORANTA Blog</title>
+
+  <!-- Fonts + Styles -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <meta name="theme-color" content="#0a0f1f">
 </head>
 <body>
+  <!-- Background layers -->
   <div class="bg rain"></div>
   <div class="bg fog"></div>
   <div class="scanlines"></div>
@@ -24,31 +27,20 @@
     </nav>
   </header>
 
+  <!-- FEED gets populated from README -->
   <main class="container" id="feed">
-    <article class="card">
-      <h2 class="post-title">
-        <a href="posts/post2.html"><span class="jpn">ランナー</span> Post 2: Another Day</a>
-      </h2>
-      <p class="meta">Aug 10, 2025 · Sector: 02 · Clearance: Public</p>
-      <p>Street level telemetry updated. More thoughts under neon skies.</p>
-      <a class="chip" href="posts/post2.html">OPEN FILE</a>
-    </article>
-
-    <article class="card">
-      <h2 class="post-title">
-        <a href="posts/post1.html"><span class="jpn">ブレード</span> Post 1: Hello World</a>
-      </h2>
-      <p class="meta">Aug 9, 2025 · Sector: 01 · Clearance: Public</p>
-      <p>First boot sequence. Initiating neon pipeline and rain shader…</p>
-      <a class="chip" href="posts/post1.html">OPEN FILE</a>
-    </article>
+    <noscript>
+      <article class="card">
+        <h2 class="post-title"><span class="jpn">オフライン</span> JavaScript Disabled</h2>
+        <p class="meta">Cannot fetch README without JS.</p>
+      </article>
+    </noscript>
   </main>
 
   <section class="about container" id="about">
     <h3 class="section-title">ABOUT // OPERATOR</h3>
     <p>
-      This is a static GitHub Pages blog skinned for retro-future noir:
-      neon glows, scanlines, glitch typographics, and a rainy parallax background.
+      Static retro-future blog with neon glows, scanlines, and rainy parallax. The feed below is built on-the-fly from a Markdown README.
     </p>
   </section>
 
@@ -56,8 +48,104 @@
     <p>© 2025 BUDOSTACK // Off-World Editions</p>
   </footer>
 
+  <!-- Optional Markdown renderer if you later want rich excerpts -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
   <script>
-    // Neon flicker effect on header logo
+    // ========= CONFIG =========
+    const README_URL = 'https://raw.githubusercontent.com/sensei-zenabi/BUDOSTACK/main/users/ville/readme.md';
+    const GITHUB_README_PAGE = 'https://github.com/sensei-zenabi/BUDOSTACK/blob/main/users/ville/readme.md';
+
+    // Optional tiny cache (30 min)
+    const CACHE_KEY = 'ext_readme_cache_v1:' + README_URL;
+    const CACHE_TTL_MS = 30 * 60 * 1000;
+
+    const feedEl = document.getElementById('feed');
+
+    function githubAnchorId(headingText) {
+      return headingText
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-');
+    }
+
+    function parseDiary(md) {
+      const regex = /###\s+(.+?)\s+###\s*\n([\s\S]*?)(?=\n###\s|$)/g;
+      const entries = [];
+      let m;
+      while ((m = regex.exec(md)) !== null) {
+        const heading = m[1].trim();
+        const body = (m[2] || '').trim();
+        const firstParagraph = body.split(/\n{2,}/).map(s => s.trim()).find(Boolean) || '';
+        const excerpt = firstParagraph
+          ? (firstParagraph.length > 240 ? firstParagraph.slice(0, 237) + '…' : firstParagraph)
+          : '';
+        entries.push({ heading, body, excerpt });
+      }
+      return entries;
+    }
+
+    function renderEntries(entries) {
+      if (!entries.length) {
+        feedEl.innerHTML = `
+          <article class="card">
+            <h2 class="post-title"><span class="jpn">∅</span> No entries found</h2>
+            <p class="meta">Ensure your README uses "### Title ###" blocks.</p>
+          </article>`;
+        return;
+      }
+
+      feedEl.innerHTML = '';
+      entries.forEach((e, idx) => {
+        const anchor = githubAnchorId(e.heading);
+        const link = `${GITHUB_README_PAGE}#${anchor}`;
+
+        const article = document.createElement('article');
+        article.className = 'card';
+        article.innerHTML = `
+          <h2 class="post-title">
+            <a href="${link}" target="_blank" rel="noopener">
+              <span class="jpn">${String(idx + 1).padStart(2, '0')}</span> ${e.heading}
+            </a>
+          </h2>
+          <p class="meta">${e.heading} · Clearance: Public</p>
+          <p>${e.excerpt || '—'}</p>
+          <a class="chip" href="${link}" target="_blank" rel="noopener">OPEN FILE</a>
+        `;
+        feedEl.appendChild(article);
+      });
+    }
+
+    async function loadReadme() {
+      try {
+        const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+        if (cached && (Date.now() - cached.when) < CACHE_TTL_MS) {
+          renderEntries(parseDiary(cached.data));
+          return;
+        }
+      } catch (_) {}
+
+      try {
+        const res = await fetch(README_URL, { mode: 'cors' });
+        if (!res.ok) throw new Error(`Fetch failed: ${res.status} ${res.statusText}`);
+        const md = await res.text();
+        renderEntries(parseDiary(md));
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ when: Date.now(), data: md }));
+      } catch (err) {
+        console.error(err);
+        feedEl.innerHTML = `
+          <article class="card">
+            <h2 class="post-title">Couldn’t load README</h2>
+            <p class="meta">Check the README URL and CORS.</p>
+            <p>${String(err)}</p>
+          </article>`;
+      }
+    }
+
+    loadReadme();
+
+    // Logo flicker
     const logo = document.querySelector('.logo');
     setInterval(() => {
       const n = Math.random();
@@ -65,16 +153,15 @@
       logo.classList.toggle('flicker', n > 0.85);
     }, 140);
 
-    // Subtle parallax on mouse move
+    // Parallax background
     const rain = document.querySelector('.bg.rain');
     const fog = document.querySelector('.bg.fog');
     window.addEventListener('mousemove', (e) => {
       const x = (e.clientX / window.innerWidth - 0.5) * 10;
       const y = (e.clientY / window.innerHeight - 0.5) * 10;
-      rain.style.transform = `translate(${x}px, ${y}px)`;
-      fog.style.transform = `translate(${-x}px, ${-y}px)`;
+      if (rain) rain.style.transform = `translate(${x}px, ${y}px)`;
+      if (fog)  fog.style.transform  = `translate(${-x}px, ${-y}px)`;
     });
   </script>
 </body>
 </html>
-
