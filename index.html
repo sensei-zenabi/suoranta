@@ -72,53 +72,45 @@
         .replace(/\s+/g, '-');
     }
 
-    function parseDiary(md) {
-      const regex = /###\s+(.+?)\s+###\s*\n([\s\S]*?)(?=\n###\s|$)/g;
-      const entries = [];
-      let m;
-      while ((m = regex.exec(md)) !== null) {
-        const heading = m[1].trim();
-        const body = (m[2] || '').trim();
-        const firstParagraph = body.split(/\n{2,}/).map(s => s.trim()).find(Boolean) || '';
-        const excerpt = firstParagraph
-          ? (firstParagraph.length > 240 ? firstParagraph.slice(0, 237) + '…' : firstParagraph)
-          : '';
-        entries.push({ heading, body, excerpt });
-      }
-      return entries;
-    }
+	function parseDiary(md) {
+	  const regex = /###\s+(.+?)\s+###\s*\n([\s\S]*?)(?=\n###\s|$)/g;
+	  const entries = [];
+	  let m;
 
-    function renderEntries(entries) {
-      if (!entries.length) {
-        feedEl.innerHTML = `
-          <article class="card">
-            <h2 class="post-title"><span class="jpn">∅</span> No entries found</h2>
-            <p class="meta">Ensure your README uses "### Title ###" blocks.</p>
-          </article>`;
-        return;
-      }
+	  while ((m = regex.exec(md)) !== null) {
+	    const heading = m[1].trim();
+	    const body    = (m[2] || '').trim();   // keep entire body
+	    entries.push({ heading, body });
+	  }
+	  return entries;
+	}
 
-      feedEl.innerHTML = '';
-      entries.forEach((e, idx) => {
-        const anchor = githubAnchorId(e.heading);
-        const link = `${GITHUB_README_PAGE}#${anchor}`;
-		const num = entries.length - idx; // highest number for the latest post
+	function renderEntries(entries) {
+	  feedEl.innerHTML = '';
+	  entries.forEach((e, idx) => {
+	    const anchor = githubAnchorId(e.heading);
+	    const link   = `${GITHUB_README_PAGE}#${anchor}`;
+	    const num    = entries.length - idx;
 
-        const article = document.createElement('article');
-        article.className = 'card';
-        article.innerHTML = `
-          <h2 class="post-title">
-            <a href="${link}" target="_blank" rel="noopener">
-              #${num} - ${e.heading}
-            </a>
-          </h2>
-          <p class="meta">${e.heading} · Clearance: Public</p>
-          <p>${e.excerpt || '—'}</p>
-          <a class="chip" href="${link}" target="_blank" rel="noopener">OPEN FILE</a>
-        `;
-        feedEl.appendChild(article);
-      });
-    }
+	    const article = document.createElement('article');
+	    article.className = 'card';
+	    article.innerHTML = `
+	      <h2 class="post-title">
+	        <a href="${link}" target="_blank" rel="noopener">
+	          #${num} - ${e.heading}
+	        </a>
+	      </h2>
+	      <p class="meta">${e.heading} · Clearance: Public</p>
+	      <div class="post-body">
+	        ${marked.parse(e.body)}           <!-- full post -->
+	      </div>
+	      <a class="chip" href="${link}" target="_blank" rel="noopener">
+	        OPEN FILE
+	      </a>
+	    `;
+	    feedEl.appendChild(article);
+	  });
+	}
 
     async function loadReadme() {
       try {
