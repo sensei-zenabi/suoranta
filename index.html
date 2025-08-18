@@ -102,13 +102,14 @@
       entries.forEach((e, idx) => {
         const anchor = githubAnchorId(e.heading);
         const link = `${GITHUB_README_PAGE}#${anchor}`;
+		const num = entries.length - idx; // highest number for the latest post
 
         const article = document.createElement('article');
         article.className = 'card';
         article.innerHTML = `
           <h2 class="post-title">
             <a href="${link}" target="_blank" rel="noopener">
-              <span class="jpn">${String(idx + 1).padStart(2, '0')}</span> ${e.heading}
+              <span class="jpn">${String(num).padStart(2, '0')}</span> ${e.heading}
             </a>
           </h2>
           <p class="meta">${e.heading} · Clearance: Public</p>
