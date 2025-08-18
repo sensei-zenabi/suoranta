@@ -27,22 +27,24 @@
     </nav>
   </header>
 
-  <!-- FEED gets populated from README -->
-  <main class="container" id="feed">
-    <noscript>
-      <article class="card">
-        <h2 class="post-title"><span class="jpn">オフライン</span> JavaScript Disabled</h2>
-        <p class="meta">Cannot fetch README without JS.</p>
-      </article>
-    </noscript>
-  </main>
+  <div class="content">
+    <!-- FEED gets populated from README -->
+    <main class="container" id="feed">
+      <noscript>
+        <article class="card">
+          <h2 class="post-title"><span class="jpn">オフライン</span> JavaScript Disabled</h2>
+          <p class="meta">Cannot fetch README without JS.</p>
+        </article>
+      </noscript>
+    </main>
 
-  <section class="about container" id="about">
-    <h3 class="section-title">ABOUT // OPERATOR</h3>
-    <p>
-      Static retro-future blog with neon glows, scanlines, and rainy parallax. The feed below is built on-the-fly from a Markdown README.
-    </p>
-  </section>
+    <section class="about container" id="about">
+      <h3 class="section-title">ABOUT // OPERATOR</h3>
+      <p>
+        Static retro-future blog with neon glows, scanlines, and rainy parallax. The feed below is built on-the-fly from a Markdown README.
+      </p>
+    </section>
+  </div>
 
   <footer class="site-footer">
     <p>© 2025 BUDOSTACK // Off-World Editions</p>
@@ -161,6 +163,17 @@
       const y = (e.clientY / window.innerHeight - 0.5) * 10;
       if (rain) rain.style.transform = `translate(${x}px, ${y}px)`;
       if (fog)  fog.style.transform  = `translate(${-x}px, ${-y}px)`;
+    });
+
+    // Smooth scrolling for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const target = document.getElementById(link.getAttribute('href').slice(1));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
     });
   </script>
 </body>
