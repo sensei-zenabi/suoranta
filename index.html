@@ -19,7 +19,7 @@
 
   <header class="site-header">
     <div class="logo glitch" data-text="BUDOSTACK BLOG">BUDOSTACK BLOG</div>
-    <p class="tag">The Martial Art of Software</p>
+    <p class="tag">The Martial Art of Software - For those about to Zen...</p>
     <nav class="nav">
       <a class="neon-btn" href="https://github.com/sensei-zenabi/BUDOSTACK">HOME</a>
       <a class="neon-btn" href="#about">ABOUT</a>
@@ -72,45 +72,45 @@
         .replace(/\s+/g, '-');
     }
 
-	function parseDiary(md) {
-	  const regex = /###\s+(.+?)\s+###\s*\n([\s\S]*?)(?=\n###\s|$)/g;
-	  const entries = [];
-	  let m;
+    function parseDiary(md) {
+      const regex = /###\s+(.+?)\s+###\s*\n([\s\S]*?)(?=\n###\s|$)/g;
+      const entries = [];
+      let m;
 
-	  while ((m = regex.exec(md)) !== null) {
-	    const heading = m[1].trim();
-	    const body    = (m[2] || '').trim();   // keep entire body
-	    entries.push({ heading, body });
-	  }
-	  return entries;
-	}
+      while ((m = regex.exec(md)) !== null) {
+        const heading = m[1].trim();
+        const body    = (m[2] || '').trim();   // keep entire body
+        entries.push({ heading, body });
+      }
+      return entries;
+    }
 
-	function renderEntries(entries) {
-	  feedEl.innerHTML = '';
-	  entries.forEach((e, idx) => {
-	    const anchor = githubAnchorId(e.heading);
-	    const link   = `${GITHUB_README_PAGE}#${anchor}`;
-	    const num    = entries.length - idx;
+    function renderEntries(entries) {
+      feedEl.innerHTML = '';
+      entries.forEach((e, idx) => {
+        const anchor = githubAnchorId(e.heading);
+        const link   = `${GITHUB_README_PAGE}#${anchor}`;
+        const num    = entries.length - idx;
 
-	    const article = document.createElement('article');
-	    article.className = 'card';
-	    article.innerHTML = `
-	      <h2 class="post-title">
-	        <a href="${link}" target="_blank" rel="noopener">
-	          #${num} - ${e.heading}
-	        </a>
-	      </h2>
-	      <p class="meta">Type: Log Entry · Clearance: Public</p>
-	      <div class="post-body">
-	        ${marked.parse(e.body)}           <!-- full post -->
-	      </div>
-	      <a class="chip" href="${link}" target="_blank" rel="noopener">
-	        OPEN FILE
-	      </a>
-	    `;
-	    feedEl.appendChild(article);
-	  });
-	}
+        const article = document.createElement('article');
+        article.className = 'card';
+        article.innerHTML = `
+          <h2 class="post-title">
+            <a href="${link}" target="_blank" rel="noopener">
+              #${num} - ${e.heading}
+            </a>
+          </h2>
+          <p class="meta">Type: Log Entry · Clearance: Public</p>
+          <div class="post-body">
+            ${marked.parse(e.body)}           <!-- full post -->
+          </div>
+          <a class="chip" href="${link}" target="_blank" rel="noopener">
+            OPEN FILE
+          </a>
+        `;
+        feedEl.appendChild(article);
+      });
+    }
 
     async function loadReadme() {
       try {
