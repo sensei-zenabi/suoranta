@@ -138,6 +138,14 @@ body::before{
   font-size:14px;
 }
 
+/* About */
+.about-photo {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;   /* ← round the corners */
+}
+
 /* Nav */
 .nav{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; }
 .neon-btn{
