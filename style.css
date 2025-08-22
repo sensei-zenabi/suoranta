@@ -14,19 +14,22 @@
 
 *{box-sizing:border-box}
 html,body{height:100%}
-body{
-  margin:0;
-  color:var(--fg);
-  background: radial-gradient(1200px 800px at 20% 10%, #0b1633 0%, #070a16 60%, #04060d 100%),
-              radial-gradient(900px 600px at 90% 80%, #1a0b24 0%, transparent 60%) ,
-              var(--bg);
-  font-family: "Share Tech Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-  line-height:1.6;
-  display:flex;
-  flex-direction:column;
-  min-height:100vh;
-  overflow:hidden;
-}
+  body{
+    margin:0;
+    color:var(--fg);
+    background: radial-gradient(1200px 800px at 20% 10%, #0b1633 0%, #070a16 60%, #04060d 100%),
+                radial-gradient(900px 600px at 90% 80%, #1a0b24 0%, transparent 60%) ,
+                var(--bg);
+    font-family: "Share Tech Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    line-height:1.6;
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
+    overflow:hidden;
+  }
+
+/* Utility classes */
+.hidden{display:none;}
 
 /* Subtle grid */
 body::before{
