@@ -22,8 +22,8 @@
     <p class="tag">The Martial Art of Software - For those about to Zen...</p>
     <nav class="nav">
       <a class="neon-btn" href="https://github.com/sensei-zenabi/BUDOSTACK">REPO</a>
-      <a class="neon-btn" href="#about">ABOUT</a>
-      <a class="neon-btn" href="#feed">FEED</a>
+      <a class="neon-btn" href="#about" id="about-btn">ABOUT</a>
+      <a class="neon-btn" href="#feed" id="feed-btn">FEED</a>
     </nav>
   </header>
 
@@ -38,11 +38,12 @@
       </noscript>
     </main>
 
-    <section class="about container" id="about">
+    <section class="about container hidden" id="about">
       <h3 class="section-title">ABOUT // OPERATOR</h3>
       <p>
         Built with a passion towards everything nerdy that makes no sense but is fun to create. The author of BUDOSTACK graduated in 2012 with a degree from Embedded Systems and Control Engineering, and has since drifted from algorithms and C/C++ to management. Hence, BUDOSTACK mainly serves as a platform to learn AI capabilites in embedded context.
       </p>
+      <img src="images/about.png" alt="About image">
     </section>
   </div>
 
@@ -139,6 +140,20 @@
     }
 
     loadReadme();
+
+    // Toggle between feed and about sections
+    const aboutSection = document.getElementById('about');
+    const feedSection = document.getElementById('feed');
+    document.getElementById('about-btn').addEventListener('click', (e) => {
+      e.preventDefault();
+      feedSection.classList.add('hidden');
+      aboutSection.classList.remove('hidden');
+    });
+    document.getElementById('feed-btn').addEventListener('click', (e) => {
+      e.preventDefault();
+      aboutSection.classList.add('hidden');
+      feedSection.classList.remove('hidden');
+    });
 
     // Logo flicker
     const logo = document.querySelector('.logo');
