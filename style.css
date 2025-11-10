@@ -171,6 +171,51 @@ body::before{
   display: none;               /* Chrome/Safari/Opera */
 }
 
+.feed-list{
+  display:flex;
+  flex-direction:column;
+}
+
+.load-more-container{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+  margin:24px 0 40px;
+}
+
+.load-more-btn{
+  cursor:pointer;
+  font-family:"Share Tech Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+}
+
+.load-more-btn:disabled{
+  cursor:not-allowed;
+  opacity:.6;
+  box-shadow:0 0 10px var(--shadow), inset 0 0 8px rgba(255,0,204,.2);
+  transform:none;
+}
+
+.load-more-btn:disabled:hover{
+  border-color:rgba(0,229,255,.4);
+  box-shadow:0 0 10px var(--shadow), inset 0 0 8px rgba(255,0,204,.2);
+  transform:none;
+}
+
+.load-more-status{
+  margin:0;
+  font-size:12px;
+  color:var(--dim);
+  text-align:center;
+}
+
+.load-more-status.error{
+  color:var(--mag);
+}
+
 /* Cards (posts) */
 .card{
   background: linear-gradient(180deg, rgba(10,15,31,.7), rgba(10,15,31,.5));
