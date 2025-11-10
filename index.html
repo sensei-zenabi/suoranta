@@ -167,21 +167,36 @@
       return parts.join('\n');
     }
 
-    function createSanitizedCommit(detail) {
-      const commit = detail.commit || {};
-      const author = commit.author || commit.committer || {};
-      const files = Array.isArray(detail.files) ? detail.files.map(f => f.filename) : [];
+    function createCommitBase(source) {
+      const commit = source?.commit || {};
+      const primaryAuthor = commit.author || {};
+      const fallbackAuthor = commit.committer || {};
+      const userAuthor = source?.author || source?.committer || {};
+
+      const authorName = primaryAuthor.name || userAuthor.name || userAuthor.login || fallbackAuthor.name || 'Unknown';
+      const authorEmail = primaryAuthor.email || fallbackAuthor.email || '';
+      const dateIso = primaryAuthor.date || fallbackAuthor.date || '';
 
       return {
-        sha: detail.sha,
-        shortSha: detail.sha.slice(0, 7),
-        authorName: author.name || 'Unknown',
-        authorEmail: author.email || '',
-        dateIso: author.date || commit.author?.date || commit.committer?.date || '',
+        sha: source?.sha || '',
+        shortSha: (source?.sha || '').slice(0, 7),
+        authorName,
+        authorEmail,
+        dateIso,
         message: commit.message || '',
-        files,
-        htmlUrl: detail.html_url
+        htmlUrl: source?.html_url || '',
       };
+    }
+
+    function createCommitFromDetail(detail) {
+      const base = createCommitBase(detail);
+      const files = Array.isArray(detail?.files) ? detail.files.map(file => file.filename) : [];
+      return { ...base, files };
+    }
+
+    function createCommitFromSummary(summary) {
+      const base = createCommitBase(summary);
+      return { ...base, files: [] };
     }
 
     function getAllCommits() {
@@ -219,7 +234,7 @@
         const article = document.createElement('article');
         article.className = 'card';
 
-        const fileCount = commit.files.length;
+        const fileCount = Array.isArray(commit.files) ? commit.files.length : 0;
         const infoText = fileCount
           ? `${fileCount} ${fileCount === 1 ? 'file' : 'files'} touched`
           : 'No tracked files changed';
@@ -363,19 +378,23 @@
         throw new Error('Unexpected response when requesting commits.');
       }
 
-      const commitDetails = await Promise.all(
-        summaries.map(summary =>
-          fetch(summary.url, { headers: API_HEADERS })
-            .then(res => {
-              if (!res.ok) {
-                throw new Error(`Detail request failed for ${summary.sha}: ${res.status} ${res.statusText}`);
-              }
-              return res.json();
-            })
-        )
-      );
+      const commits = [];
 
-      return commitDetails.map(createSanitizedCommit);
+      for (const summary of summaries) {
+        try {
+          const detailResponse = await fetch(summary.url, { headers: API_HEADERS });
+          if (!detailResponse.ok) {
+            throw new Error(`Detail request failed for ${summary.sha}: ${detailResponse.status} ${detailResponse.statusText}`);
+          }
+          const detail = await detailResponse.json();
+          commits.push(createCommitFromDetail(detail));
+        } catch (err) {
+          console.warn(`Falling back to summary for commit ${summary.sha}`, err);
+          commits.push(createCommitFromSummary(summary));
+        }
+      }
+
+      return { commits, fetchedCount: summaries.length };
     }
 
     async function loadPage(page, { append = false } = {}) {
@@ -386,7 +405,7 @@
       updateLoadMoreControls();
 
       try {
-        const commits = await fetchCommitsPage(page);
+        const { commits, fetchedCount } = await fetchCommitsPage(page);
 
         if (page === 1) {
           state.pages.clear();
@@ -395,7 +414,7 @@
 
         state.pages.set(page, commits);
         state.currentPage = Math.max(state.currentPage, page);
-        state.hasMore = commits.length === COMMITS_PER_PAGE;
+        state.hasMore = fetchedCount === COMMITS_PER_PAGE;
 
         if (page === 1 || !append) {
           renderCommits(getAllCommits(), { append: false });
