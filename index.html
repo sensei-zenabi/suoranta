@@ -69,16 +69,44 @@
     const OWNER = 'sensei-zenabi';
     const REPO = 'BUDOSTACK';
     const BRANCH = 'main';
-    const MAX_COMMITS = 10;
+    const COMMITS_PER_PAGE = 10;
 
     const COMMITS_PAGE_URL = `https://github.com/${OWNER}/${REPO}/commits/${BRANCH}`;
-    const COMMITS_API_URL = `https://api.github.com/repos/${OWNER}/${REPO}/commits?sha=${BRANCH}&per_page=${MAX_COMMITS}`;
+    const COMMITS_API_URL = `https://api.github.com/repos/${OWNER}/${REPO}/commits?sha=${BRANCH}&per_page=${COMMITS_PER_PAGE}`;
 
-    const CACHE_KEY = `commit_log_cache_v1:${OWNER}/${REPO}/${BRANCH}`;
+    const CACHE_KEY = `commit_log_cache_v2:${OWNER}/${REPO}/${BRANCH}`;
     const CACHE_TTL_MS = 15 * 60 * 1000;
     const API_HEADERS = { 'Accept': 'application/vnd.github+json' };
 
     const feedEl = document.getElementById('feed');
+    feedEl.innerHTML = '';
+
+    const feedListEl = document.createElement('div');
+    feedListEl.className = 'feed-list';
+    feedEl.appendChild(feedListEl);
+
+    const loadMoreContainer = document.createElement('div');
+    loadMoreContainer.className = 'load-more-container hidden';
+
+    const loadMoreButton = document.createElement('button');
+    loadMoreButton.type = 'button';
+    loadMoreButton.className = 'neon-btn load-more-btn';
+    loadMoreButton.textContent = 'LOAD MORE COMMITS';
+    loadMoreContainer.appendChild(loadMoreButton);
+
+    const loadMoreStatus = document.createElement('p');
+    loadMoreStatus.className = 'load-more-status hidden';
+    loadMoreStatus.setAttribute('role', 'status');
+    loadMoreContainer.appendChild(loadMoreStatus);
+
+    feedEl.appendChild(loadMoreContainer);
+
+    const state = {
+      pages: new Map(),
+      currentPage: 0,
+      hasMore: true,
+      isLoading: false
+    };
 
     const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -156,8 +184,36 @@
       };
     }
 
-    function renderCommits(commits) {
-      feedEl.innerHTML = '';
+    function getAllCommits() {
+      const pages = Array.from(state.pages.keys()).sort((a, b) => a - b);
+      const combined = [];
+      pages.forEach(pageNum => {
+        const commits = state.pages.get(pageNum);
+        if (Array.isArray(commits)) {
+          combined.push(...commits);
+        }
+      });
+      return combined;
+    }
+
+    function renderCommits(commits, { append = false } = {}) {
+      if (!append) {
+        feedListEl.innerHTML = '';
+        if (!commits.length) {
+          feedListEl.innerHTML = `
+            <article class="card">
+              <h2 class="post-title">No commits yet</h2>
+              <p class="meta">The repository is quiet—check back soon.</p>
+            </article>`;
+          return;
+        }
+      }
+
+      if (!commits.length) {
+        return;
+      }
+
+      const fragment = document.createDocumentFragment();
 
       commits.forEach(commit => {
         const article = document.createElement('article');
@@ -196,12 +252,14 @@
         `;
         article.appendChild(actions);
 
-        feedEl.appendChild(article);
+        fragment.appendChild(article);
       });
+
+      feedListEl.appendChild(fragment);
     }
 
     function renderLoading() {
-      feedEl.innerHTML = `
+      feedListEl.innerHTML = `
         <article class="card">
           <h2 class="post-title">Loading commits…</h2>
           <p class="meta">Contacting GitHub for the latest activity.</p>
@@ -209,7 +267,7 @@
     }
 
     function renderError(error) {
-      feedEl.innerHTML = `
+      feedListEl.innerHTML = `
         <article class="card">
           <h2 class="post-title">Couldn’t load commits</h2>
           <p class="meta">Check the GitHub API status or try again later.</p>
@@ -217,59 +275,173 @@
         </article>`;
     }
 
-    async function loadCommits() {
-      let renderedFromCache = false;
+    function setLoadMoreStatus(message = '', isError = false) {
+      if (!message) {
+        loadMoreStatus.textContent = '';
+        loadMoreStatus.classList.add('hidden');
+        loadMoreStatus.classList.remove('error');
+        return;
+      }
 
+      loadMoreStatus.textContent = message;
+      loadMoreStatus.classList.toggle('error', isError);
+      loadMoreStatus.classList.remove('hidden');
+    }
+
+    function updateLoadMoreControls() {
+      const hasAnyCommits = getAllCommits().length > 0;
+      if (state.hasMore && hasAnyCommits) {
+        loadMoreContainer.classList.remove('hidden');
+      } else {
+        loadMoreContainer.classList.add('hidden');
+      }
+      loadMoreButton.disabled = state.isLoading;
+      loadMoreButton.textContent = state.isLoading ? 'LOADING…' : 'LOAD MORE COMMITS';
+    }
+
+    function readCache() {
       try {
-        const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
-        if (cached && Array.isArray(cached.commits) && (Date.now() - cached.when) < CACHE_TTL_MS) {
-          renderCommits(cached.commits);
-          renderedFromCache = true;
-        }
+        const raw = localStorage.getItem(CACHE_KEY);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (!parsed || typeof parsed !== 'object') return null;
+        if (typeof parsed.when !== 'number') return null;
+        if (!parsed.pages || typeof parsed.pages !== 'object') return null;
+        if ((Date.now() - parsed.when) > CACHE_TTL_MS) return null;
+        return parsed;
       } catch (err) {
         console.warn('Failed to read commit cache', err);
-      }
-
-      if (!renderedFromCache) {
-        renderLoading();
-      }
-
-      try {
-        const listResponse = await fetch(COMMITS_API_URL, { headers: API_HEADERS });
-        if (!listResponse.ok) {
-          throw new Error(`List request failed: ${listResponse.status} ${listResponse.statusText}`);
-        }
-
-        const summaries = await listResponse.json();
-        const commitDetails = await Promise.all(
-          summaries.map(summary =>
-            fetch(summary.url, { headers: API_HEADERS })
-              .then(res => {
-                if (!res.ok) {
-                  throw new Error(`Detail request failed for ${summary.sha}: ${res.status} ${res.statusText}`);
-                }
-                return res.json();
-              })
-          )
-        );
-
-        const sanitized = commitDetails.map(createSanitizedCommit);
-        renderCommits(sanitized);
-
-        try {
-          localStorage.setItem(CACHE_KEY, JSON.stringify({ when: Date.now(), commits: sanitized }));
-        } catch (err) {
-          console.warn('Failed to store commit cache', err);
-        }
-      } catch (err) {
-        console.error(err);
-        if (!renderedFromCache) {
-          renderError(err);
-        }
+        return null;
       }
     }
 
-    loadCommits();
+    function writeCache(data) {
+      try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+      } catch (err) {
+        console.warn('Failed to store commit cache', err);
+      }
+    }
+
+    function applyCachedPages(cache) {
+      state.pages.clear();
+
+      const pageNumbers = Object.keys(cache.pages || {})
+        .map(Number)
+        .filter(pageNum => Number.isFinite(pageNum) && pageNum > 0)
+        .sort((a, b) => a - b);
+
+      pageNumbers.forEach(pageNum => {
+        const commits = Array.isArray(cache.pages[pageNum]) ? cache.pages[pageNum] : [];
+        state.pages.set(pageNum, commits);
+      });
+
+      state.currentPage = pageNumbers.length ? pageNumbers[pageNumbers.length - 1] : 0;
+
+      const lastPageNumber = pageNumbers.length ? pageNumbers[pageNumbers.length - 1] : null;
+      const lastPageSize = lastPageNumber ? (Array.isArray(cache.pages[lastPageNumber]) ? cache.pages[lastPageNumber].length : 0) : 0;
+      state.hasMore = cache.hasMore !== undefined ? !!cache.hasMore : (lastPageSize === COMMITS_PER_PAGE && pageNumbers.length > 0);
+
+      const allCommits = getAllCommits();
+      if (allCommits.length) {
+        renderCommits(allCommits, { append: false });
+      } else if (pageNumbers.length) {
+        renderCommits([], { append: false });
+      } else {
+        renderLoading();
+      }
+    }
+
+    async function fetchCommitsPage(page) {
+      const listResponse = await fetch(`${COMMITS_API_URL}&page=${page}`, { headers: API_HEADERS });
+      if (!listResponse.ok) {
+        throw new Error(`List request failed for page ${page}: ${listResponse.status} ${listResponse.statusText}`);
+      }
+
+      const summaries = await listResponse.json();
+      if (!Array.isArray(summaries)) {
+        throw new Error('Unexpected response when requesting commits.');
+      }
+
+      const commitDetails = await Promise.all(
+        summaries.map(summary =>
+          fetch(summary.url, { headers: API_HEADERS })
+            .then(res => {
+              if (!res.ok) {
+                throw new Error(`Detail request failed for ${summary.sha}: ${res.status} ${res.statusText}`);
+              }
+              return res.json();
+            })
+        )
+      );
+
+      return commitDetails.map(createSanitizedCommit);
+    }
+
+    async function loadPage(page, { append = false } = {}) {
+      if (state.isLoading) return;
+
+      setLoadMoreStatus('');
+      state.isLoading = true;
+      updateLoadMoreControls();
+
+      try {
+        const commits = await fetchCommitsPage(page);
+
+        if (page === 1) {
+          state.pages.clear();
+          state.currentPage = 0;
+        }
+
+        state.pages.set(page, commits);
+        state.currentPage = Math.max(state.currentPage, page);
+        state.hasMore = commits.length === COMMITS_PER_PAGE;
+
+        if (page === 1 || !append) {
+          renderCommits(getAllCommits(), { append: false });
+        } else {
+          renderCommits(commits, { append: true });
+        }
+
+        if (page === 1) {
+          cacheData.pages = {};
+        }
+        cacheData.pages[page] = commits;
+        cacheData.hasMore = state.hasMore;
+        cacheData.when = Date.now();
+        writeCache(cacheData);
+      } catch (err) {
+        console.error(err);
+        if (!getAllCommits().length) {
+          renderError(err);
+        } else {
+          setLoadMoreStatus('Could not load more commits. Please try again.', true);
+        }
+      } finally {
+        state.isLoading = false;
+        updateLoadMoreControls();
+      }
+    }
+
+    loadMoreButton.addEventListener('click', () => {
+      if (state.isLoading) return;
+      const nextPage = state.currentPage + 1;
+      const shouldAppend = state.currentPage >= 1;
+      loadPage(nextPage, { append: shouldAppend });
+    });
+
+    const cachedData = readCache();
+    let cacheData = cachedData ? cachedData : { when: 0, pages: {}, hasMore: true };
+
+    if (cachedData) {
+      applyCachedPages(cachedData);
+    } else {
+      renderLoading();
+    }
+
+    updateLoadMoreControls();
+
+    loadPage(1, { append: false });
 
     // Toggle between feed and about sections
     const aboutSection = document.getElementById('about');
