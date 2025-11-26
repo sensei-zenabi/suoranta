@@ -146,6 +146,58 @@ body::before{
   border-radius: 12px;   /* ← round the corners */
 }
 
+.news-content {
+  background: var(--card);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 12px var(--shadow);
+  padding: 18px;
+  margin-bottom: 18px;
+  backdrop-filter: blur(4px);
+}
+
+.news-content h1,
+.news-content h2,
+.news-content h3,
+.news-content h4,
+.news-content h5,
+.news-content h6 {
+  margin: 0 0 8px;
+  color: var(--cyan);
+}
+
+.news-content p,
+.news-content li {
+  color: var(--fg);
+  line-height: 1.7;
+}
+
+.news-content a {
+  color: var(--amber);
+}
+
+.news-content ul,
+.news-content ol {
+  padding-left: 22px;
+}
+
+.news-content code {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 2px 5px;
+  border-radius: 6px;
+}
+
+.news-content pre {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 12px;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+.news-content .error {
+  color: #ff9b9b;
+}
+
 /* Nav */
 .nav{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; }
 .neon-btn{

@@ -10,6 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <meta name="theme-color" content="#0a0f1f">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.9/dist/purify.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <!-- Background layers -->
@@ -39,21 +41,10 @@
     </main>
 
     <section class="about container hidden" id="about">
-      <h3 class="section-title">ABOUT // OPERATOR</h3>
-      <p>
-        BUDOSTACK is a lightweight operating "layer" built atop Debian Linux, specifically designed for
-        those who value the elegant simplicity and clarity found in operating systems of the 1980s.
-        It is optimized for maximum focus and efficiency on basic primitives of computing, such as 
-        file manipulation, text editing, command-line interactions, and BASIC like scripting using the
-        built-in TASK language.
-        <br><br>
-        Currently BUDOSTACK is in Early Access phase where users are able to explore it's capabilities
-        without having a guarantee to backwards compatibility from newer versions. The aim is that v1.0.0
-        will provide a full fledged user experience from terminal use to graphical user interfaces.
-        <br><br>
-        With these words I wish you pleasant retro vibes while using BUDOSTACK. Feel free to contact us
-        in case any improvement ideas pop up. We are happy to take them into analysis!
-      </p>
+      <h3 class="section-title">NEWS</h3>
+      <div id="news-content" class="news-content">
+        <p>Loading latest news...</p>
+      </div>
       <img src="images/about.png" alt="About" class="about-photo">
     </section>
   </div>
@@ -64,6 +55,8 @@
 
   <script>
     // ========= CONFIG =========
+    const NEWS_SOURCE_URL = 'https://raw.githubusercontent.com/sensei-zenabi/BUDOSTACK/main/users/ville/readme.md';
+
     const OWNER = 'sensei-zenabi';
     const REPO = 'BUDOSTACK';
     const BRANCH = 'main';
@@ -75,6 +68,26 @@
     const CACHE_KEY = `commit_log_cache_v2:${OWNER}/${REPO}/${BRANCH}`;
     const CACHE_TTL_MS = 15 * 60 * 1000;
     const API_HEADERS = { 'Accept': 'application/vnd.github+json' };
+
+    const newsContentEl = document.getElementById('news-content');
+
+    async function loadNews() {
+      if (!newsContentEl) return;
+      newsContentEl.innerHTML = '<p>Loading latest news...</p>';
+      try {
+        const response = await fetch(NEWS_SOURCE_URL, { headers: { 'Accept': 'text/plain' } });
+        if (!response.ok) throw new Error(`Failed to load news: ${response.status}`);
+
+        const markdown = await response.text();
+        const rendered = DOMPurify.sanitize(marked.parse(markdown));
+        newsContentEl.innerHTML = rendered;
+      } catch (err) {
+        console.error(err);
+        newsContentEl.innerHTML = '<p class="error">Unable to load news right now. Please try again later.</p>';
+      }
+    }
+
+    loadNews();
 
     const feedEl = document.getElementById('feed');
     feedEl.innerHTML = '';
