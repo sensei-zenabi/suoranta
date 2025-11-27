@@ -25,7 +25,16 @@
   --font-size-crest: 26px;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+  scrollbar-width: none;
+}
+
+*::-webkit-scrollbar { width: 0; height: 0; }
+*::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-track { background: transparent; }
+
+body, .content, .news-content pre { -ms-overflow-style: none; }
 html, body { height: 100%; }
 body {
   margin: 0;
