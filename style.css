@@ -15,7 +15,7 @@
   --accent-amber: #f3e4a8;
   --shadow: 0 0 0 4px var(--screen-border), 0 0 0 8px #24115f;
   --radius: 10px;
-  --font-size-body: 24px;
+  --font-size-body: 26px;
   --font-size-small: 20px;
   --font-size-medium: 22px;
   --font-size-large: 24px;
@@ -361,10 +361,10 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
 .news-content h3,
 .news-content h4,
 .news-content h5,
-.news-content h6 { margin: 0 0 8px; color: var(--accent-amber); }
+.news-content h6 { margin: 0 0 0px; color: var(--accent-amber); }
 
 .news-content p,
-.news-content li { color: var(--screen-text); line-height: 1.7; }
+.news-content li { color: var(--screen-text); line-height: 0.8; }
 
 .news-content a { color: var(--accent-pink); }
 
