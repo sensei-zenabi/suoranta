@@ -1,4 +1,12 @@
 /* ========== Variables & Base ========== */
+@font-face {
+  font-family: 'Modern DOS 8x8';
+  src: url('fonts/ModernDOS8x8.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --screen-bg: #40318d;
   --screen-border: #6c5eb5;
@@ -7,6 +15,14 @@
   --accent-amber: #f3e4a8;
   --shadow: 0 0 0 4px var(--screen-border), 0 0 0 8px #24115f;
   --radius: 10px;
+  --font-size-body: 16px;
+  --font-size-small: 12px;
+  --font-size-medium: 13px;
+  --font-size-large: 14px;
+  --font-size-title: 22px;
+  --font-size-logo-min: 30px;
+  --font-size-logo-max: 52px;
+  --font-size-crest: 26px;
 }
 
 * { box-sizing: border-box; }
@@ -17,7 +33,8 @@ body {
   background: radial-gradient(circle at 15% 15%, rgba(255,255,255,0.08), transparent 30%),
               radial-gradient(circle at 80% 70%, rgba(255,255,255,0.06), transparent 36%),
               var(--screen-bg);
-  font-family: 'C64 Pro Mono', 'Press Start 2P', 'IBM Plex Mono', monospace;
+  font-family: 'Modern DOS 8x8', monospace;
+  font-size: var(--font-size-body);
   line-height: 1.6;
   display: flex;
   flex-direction: column;
@@ -74,7 +91,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
   bottom: -18px;
   right: 20px;
   color: var(--accent-amber);
-  font-size: 12px;
+  font-size: var(--font-size-small);
   letter-spacing: 0.12em;
 }
 
@@ -90,7 +107,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
   box-shadow: inset 0 0 0 2px #24115f;
   text-shadow: 0 0 6px rgba(0,0,0,0.4);
 }
-.crest-mark { font-weight: 700; font-size: 26px; letter-spacing: -0.02em; }
+.crest-mark { font-weight: 700; font-size: var(--font-size-crest); letter-spacing: -0.02em; }
 .crest-lines {
   position: absolute;
   width: 6px;
@@ -105,13 +122,13 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
   margin: 0 0 6px;
   letter-spacing: .14em;
   color: var(--accent-amber);
-  font-size: 12px;
+  font-size: var(--font-size-small);
 }
 
 .logo {
-  font-family: 'C64 Pro Mono', 'Press Start 2P', 'IBM Plex Mono', monospace;
+  font-family: 'Modern DOS 8x8', monospace;
   font-weight: 700;
-  font-size: clamp(30px, 6vw, 52px);
+  font-size: clamp(var(--font-size-logo-min), 6vw, var(--font-size-logo-max));
   letter-spacing: .08em;
   color: var(--screen-text);
   margin: 0 0 10px;
@@ -123,7 +140,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
 .tag {
   margin: 0;
   color: var(--accent-amber);
-  font-size: 14px;
+  font-size: var(--font-size-large);
   max-width: 640px;
 }
 
@@ -180,8 +197,8 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
 
 .load-more-btn {
   cursor: pointer;
-  font-family: 'C64 Pro Mono', 'Press Start 2P', 'IBM Plex Mono', monospace;
-  font-size: 13px;
+  font-family: 'Modern DOS 8x8', monospace;
+  font-size: var(--font-size-medium);
   text-transform: uppercase;
   letter-spacing: .12em;
   background: rgba(0,0,0,0.25);
@@ -204,7 +221,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
 
 .load-more-status {
   margin: 0;
-  font-size: 12px;
+  font-size: var(--font-size-small);
   color: var(--accent-amber);
   text-align: center;
 }
@@ -244,7 +261,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
 .meta {
   margin: 0 0 16px;
   color: var(--screen-text);
-  font-size: 13px;
+  font-size: var(--font-size-medium);
 }
 
 .meta a { color: var(--accent-pink); text-decoration: none; }
@@ -259,7 +276,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
 }
 
 .commit-title span {
-  font-size: 12px;
+  font-size: var(--font-size-small);
   color: var(--accent-amber);
   text-transform: uppercase;
   letter-spacing: .1em;
@@ -271,12 +288,12 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
   background: rgba(0,0,0,0.35);
   border: 1px solid rgba(108,94,181,0.8);
   border-radius: 8px;
-  font-size: 14px;
+  font-size: var(--font-size-large);
   line-height: 1.5;
   white-space: pre-wrap;
   word-break: break-word;
   box-shadow: inset 0 0 22px rgba(36,17,95,0.5);
-  font-family: 'C64 Pro Mono', 'Press Start 2P', 'IBM Plex Mono', monospace;
+  font-family: 'Modern DOS 8x8', monospace;
   color: var(--screen-text);
 }
 
@@ -297,7 +314,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
   background: rgba(0,0,0,0.3);
   color: var(--screen-text);
   text-decoration: none;
-  font-size: 12px;
+  font-size: var(--font-size-small);
   text-transform: uppercase;
   letter-spacing: .12em;
   transition: border-color .2s ease, box-shadow .2s ease, transform .15s ease, background .2s ease;
@@ -313,7 +330,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
 /* About */
 .section-title {
   margin: 0 0 10px;
-  font-size: 22px;
+  font-size: var(--font-size-title);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--accent-amber);
