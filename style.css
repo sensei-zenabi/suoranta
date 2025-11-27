@@ -44,7 +44,7 @@ body {
               var(--screen-bg);
   font-family: 'Modern DOS 8x8', monospace;
   font-size: var(--font-size-body);
-  line-height: 1.6;
+  line-height: 0.8;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
