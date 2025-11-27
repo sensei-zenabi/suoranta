@@ -140,7 +140,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
   font-size: clamp(var(--font-size-logo-min), 6vw, var(--font-size-logo-max));
   letter-spacing: .08em;
   color: var(--screen-text);
-  margin: 0 0 10px;
+  margin: 0 0 0px;
   position: relative;
 }
 
@@ -149,14 +149,14 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
 .tag {
   margin: 0;
   color: var(--accent-amber);
-  font-size: var(--font-size-large);
+  font-size: var(--font-size-medium);
   max-width: 640px;
 }
 
 /* Footer */
 .site-footer {
   text-align: center;
-  padding: 20px 18px 26px;
+  padding: 0px 0px 0px;
   flex-shrink: 0;
   letter-spacing: 0.08em;
   border-top: 2px solid var(--screen-border);
@@ -345,7 +345,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
   color: var(--accent-amber);
 }
 
-.about-photo { display: block; max-width: 100%; height: auto; border-radius: 10px; box-shadow: var(--shadow); }
+.about-photo { display: block; max-width: 100%; height: auto; border-radius: 10px; box-shadow: var(--shadow); margin-bottom: 20px }
 
 .news-content {
   background: rgba(0,0,0,0.25);
