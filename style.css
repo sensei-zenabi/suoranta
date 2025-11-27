@@ -414,3 +414,34 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
   .commit-actions { flex-direction: column; }
   .chip, .load-more-btn { width: 100%; justify-content: center; text-align: center; }
 }
+
+@media (max-width: 480px) {
+  :root {
+    --font-size-body: clamp(16px, 5vw + 6px, 20px);
+    --font-size-small: clamp(13px, 3vw + 7px, 18px);
+    --font-size-medium: clamp(14px, 4vw + 6px, 19px);
+    --font-size-large: clamp(16px, 4vw + 7px, 20px);
+    --font-size-title: clamp(18px, 4vw + 8px, 22px);
+    --font-size-logo-min: 22px;
+    --font-size-logo-max: 40px;
+    --font-size-crest: clamp(18px, 3vw + 10px, 22px);
+  }
+
+  body { line-height: 1.45; }
+
+  .site-header { padding: 18px 12px 12px; }
+  .hero { padding: 12px 12px; gap: 10px; }
+  .hero::after { left: 16px; bottom: -14px; font-size: var(--font-size-small); }
+  .crest { min-width: 64px; min-height: 64px; }
+  .logo { letter-spacing: 0.05em; }
+  .tag { font-size: var(--font-size-small); }
+
+  .container { width: min(100%, 94%); }
+
+  .card { padding: 12px 12px 9px; }
+  .git-log { font-size: var(--font-size-small); }
+  .commit-actions { gap: 8px; }
+
+  .nav { gap: 6px; }
+  .retro-btn { padding: 10px 12px; }
+}
