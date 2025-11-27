@@ -7,7 +7,7 @@
 
   <!-- Fonts + Styles -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Space+Grotesk:wght@400;600&family=VT323&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <meta name="theme-color" content="#0a0f1f">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" crossorigin="anonymous"></script>
@@ -19,39 +19,43 @@
   <div class="bg fog"></div>
   <div class="scanlines"></div>
 
-  <header class="site-header">
-    <div class="logo glitch" data-text="BUDOSTACK">BUDOSTACK</div>
-    <p class="tag"> - Welcome Back to 1980s -</p>
-    <nav class="nav">
-      <a class="neon-btn" href="https://github.com/sensei-zenabi/BUDOSTACK/tags">RELEASES</a>
-      <a class="neon-btn" href="#about" id="about-btn">NEWS</a>
-      <a class="neon-btn" href="#feed" id="feed-btn">COMMITS</a>
-    </nav>
-  </header>
+  <div class="poster-shell">
+    <header class="site-header">
+      <div class="badge">1985 EDITION</div>
+      <div class="logo glitch" data-text="BUDOSTACK">BUDOSTACK</div>
+      <p class="tag">Personal computing power with neon attitude.</p>
+      <div class="subtag">Engineered for visionaries, rebels, and late-night coders.</div>
+      <nav class="nav">
+        <a class="neon-btn" href="https://github.com/sensei-zenabi/BUDOSTACK/tags">RELEASES</a>
+        <a class="neon-btn" href="#about" id="about-btn">NEWS</a>
+        <a class="neon-btn" href="#feed" id="feed-btn">COMMITS</a>
+      </nav>
+    </header>
 
-  <div class="content">
-    <!-- FEED gets populated from README -->
-    <main class="container" id="feed">
-      <noscript>
-        <article class="card">
-          <h2 class="post-title"><span class="jpn">オフライン</span> JavaScript Disabled</h2>
-          <p class="meta">Enable JavaScript to view the live commit feed.</p>
-        </article>
-      </noscript>
-    </main>
+    <div class="content">
+      <!-- FEED gets populated from README -->
+      <main class="container" id="feed">
+        <noscript>
+          <article class="card">
+            <h2 class="post-title"><span class="jpn">オフライン</span> JavaScript Disabled</h2>
+            <p class="meta">Enable JavaScript to view the live commit feed.</p>
+          </article>
+        </noscript>
+      </main>
 
-    <section class="about container hidden" id="about">
-      <h2 class="section-title">BUDOSTACK NEWS</h3>
-      <div id="news-content" class="news-content">
-        <p>Loading latest news...</p>
-      </div>
-      <img src="images/about.png" alt="About" class="about-photo">
-    </section>
+      <section class="about container hidden" id="about">
+        <h2 class="section-title">BUDOSTACK NEWS</h2>
+        <div id="news-content" class="news-content">
+          <p>Loading latest news...</p>
+        </div>
+        <img src="images/about.png" alt="About" class="about-photo">
+      </section>
+    </div>
+
+    <footer class="site-footer">
+      <p>© 2025 BUDOSTACK // Ville Suoranta</p>
+    </footer>
   </div>
-
-  <footer class="site-footer">
-    <p>© 2025 BUDOSTACK // Ville Suoranta</p>
-  </footer>
 
   <script>
     // ========= CONFIG =========
