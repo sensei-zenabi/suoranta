@@ -7,7 +7,7 @@
 
   <!-- Fonts + Styles -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <meta name="theme-color" content="#0a0f1f">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" crossorigin="anonymous"></script>
@@ -15,17 +15,26 @@
 </head>
 <body>
   <!-- Background layers -->
-  <div class="bg rain"></div>
-  <div class="bg fog"></div>
-  <div class="scanlines"></div>
+  <div class="bg print-grain"></div>
+  <div class="bg ribbon ribbon-top"></div>
+  <div class="bg ribbon ribbon-bottom"></div>
 
   <header class="site-header">
-    <div class="logo glitch" data-text="BUDOSTACK">BUDOSTACK</div>
-    <p class="tag"> - Welcome Back to 1980s -</p>
+    <div class="hero">
+      <div class="crest">
+        <span class="crest-mark">C=</span>
+        <span class="crest-lines"></span>
+      </div>
+      <div class="hero-copy">
+        <p class="eyebrow">Personal computing for people who build.</p>
+        <div class="logo">BUDOSTACK</div>
+        <p class="tag">Reliability you can code on – inspired by the timeless Commodore spreads.</p>
+      </div>
+    </div>
     <nav class="nav">
-      <a class="neon-btn" href="https://github.com/sensei-zenabi/BUDOSTACK/tags">RELEASES</a>
-      <a class="neon-btn" href="#about" id="about-btn">NEWS</a>
-      <a class="neon-btn" href="#feed" id="feed-btn">COMMITS</a>
+      <a class="retro-btn" href="https://github.com/sensei-zenabi/BUDOSTACK/tags">Releases</a>
+      <a class="retro-btn" href="#about" id="about-btn">Newsroom</a>
+      <a class="retro-btn" href="#feed" id="feed-btn">Commit Log</a>
     </nav>
   </header>
 
@@ -41,7 +50,7 @@
     </main>
 
     <section class="about container hidden" id="about">
-      <h2 class="section-title">BUDOSTACK NEWS</h3>
+      <h2 class="section-title">BUDOSTACK News</h2>
       <div id="news-content" class="news-content">
         <p>Loading latest news...</p>
       </div>
