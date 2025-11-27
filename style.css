@@ -15,11 +15,11 @@
   --accent-amber: #f3e4a8;
   --shadow: 0 0 0 4px var(--screen-border), 0 0 0 8px #24115f;
   --radius: 10px;
-  --font-size-body: 16px;
-  --font-size-small: 12px;
-  --font-size-medium: 13px;
-  --font-size-large: 14px;
-  --font-size-title: 22px;
+  --font-size-body: 24px;
+  --font-size-small: 20px;
+  --font-size-medium: 22px;
+  --font-size-large: 24px;
+  --font-size-title: 26px;
   --font-size-logo-min: 30px;
   --font-size-logo-max: 52px;
   --font-size-crest: 26px;
