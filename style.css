@@ -15,14 +15,14 @@
   --accent-amber: #f3e4a8;
   --shadow: 0 0 0 4px var(--screen-border), 0 0 0 8px #24115f;
   --radius: 10px;
-  --font-size-body: 26px;
-  --font-size-small: 20px;
-  --font-size-medium: 22px;
-  --font-size-large: 24px;
-  --font-size-title: 26px;
-  --font-size-logo-min: 30px;
+  --font-size-body: clamp(18px, 1.2vw + 14px, 26px);
+  --font-size-small: clamp(14px, 1vw + 12px, 20px);
+  --font-size-medium: clamp(16px, 1.2vw + 13px, 22px);
+  --font-size-large: clamp(18px, 1.6vw + 13px, 24px);
+  --font-size-title: clamp(20px, 1.4vw + 15px, 26px);
+  --font-size-logo-min: 28px;
   --font-size-logo-max: 52px;
-  --font-size-crest: 26px;
+  --font-size-crest: clamp(20px, 1vw + 18px, 26px);
 }
 
 * {
@@ -48,7 +48,8 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
   letter-spacing: 0.04em;
 }
 
@@ -107,8 +108,8 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
 .crest {
   display: grid;
   place-items: center;
-  min-width: 96px;
-  min-height: 96px;
+  min-width: 88px;
+  min-height: 88px;
   background: var(--screen-border);
   color: var(--accent-amber);
   border-radius: 12px;
@@ -386,9 +387,30 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
 
 .news-content .error { color: #f58eb3; }
 
+@media (max-width: 900px) {
+  .hero { padding: 16px 16px; }
+  .hero::after { right: 16px; }
+  .container { width: min(980px, 94%); }
+}
+
 @media (max-width: 720px) {
-  .hero { grid-template-columns: 1fr; text-align: left; }
+  .hero { grid-template-columns: 1fr; text-align: left; gap: 12px; margin-bottom: 14px; }
   .hero::after { right: auto; left: 20px; }
   .nav { gap: 8px; }
   .commit-title { flex-direction: column; align-items: flex-start; }
+  .tag { line-height: 1.5; }
+}
+
+@media (max-width: 640px) {
+  .site-header { padding: 26px 14px 14px; }
+  .hero { padding: 14px 14px; }
+  .crest { min-width: 72px; min-height: 72px; }
+  .logo { letter-spacing: 0.06em; }
+  .nav { flex-direction: column; align-items: stretch; gap: 6px; }
+  .retro-btn { width: 100%; text-align: center; }
+  .content { padding-bottom: 18px; }
+  .card { padding: 14px 14px 10px; margin: 12px 0; }
+  .git-log { font-size: var(--font-size-medium); }
+  .commit-actions { flex-direction: column; }
+  .chip, .load-more-btn { width: 100%; justify-content: center; text-align: center; }
 }
