@@ -83,7 +83,7 @@
     function normalizeNewsMarkdown(markdown) {
       return markdown
         .split(/\r?\n/)
-        .map(line => line.match(/^<br\s*\/?>(\s*)?$/i) ? '' : line)
+        .map(line => line.match(/^\s*<br\s*\/?>(\s*)?$/i) ? '' : line)
         .join('\n');
     }
 
