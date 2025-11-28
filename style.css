@@ -39,9 +39,13 @@ html, body { height: 100%; }
 body {
   margin: 0;
   color: var(--screen-text);
-  background: radial-gradient(circle at 15% 15%, rgba(255,255,255,0.08), transparent 30%),
-              radial-gradient(circle at 80% 70%, rgba(255,255,255,0.06), transparent 36%),
-              var(--screen-bg);
+  background-color: var(--screen-bg);
+  background-image:
+    radial-gradient(circle at 15% 15%, rgba(255,255,255,0.08), transparent 30%),
+    radial-gradient(circle at 80% 70%, rgba(255,255,255,0.06), transparent 36%);
+  background-repeat: no-repeat, no-repeat;
+  background-size: 140% 140%, 180% 180%;
+  background-attachment: fixed, fixed;
   font-family: 'Modern DOS 8x8', monospace;
   font-size: var(--font-size-body);
   line-height: 0.8;
