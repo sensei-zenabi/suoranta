@@ -375,7 +375,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
 
 .news-card:last-child { margin-bottom: 0; }
 
-.news-body p { margin: 4px 0; }
+.news-body p { margin: 16px 0; }
 
 .news-content h1,
 .news-content h2,
@@ -385,7 +385,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
 .news-content h6 { margin: 0 0 0px; color: var(--accent-amber); }
 
 .news-content p,
-.news-content li { color: var(--screen-text); line-height: 0.8; }
+.news-content li { color: var(--screen-text); line-height: 0.7; }
 
 .news-content a { color: var(--accent-pink); }
 
