@@ -84,7 +84,13 @@
       if (!newsContentEl) return;
       newsContentEl.innerHTML = '<p>Loading latest news...</p>';
       try {
-        const response = await fetch(NEWS_SOURCE_URL, { headers: { 'Accept': 'text/plain' } });
+        const cacheBuster = Date.now();
+        const newsUrl = `${NEWS_SOURCE_URL}?cache=${cacheBuster}`;
+
+        const response = await fetch(newsUrl, {
+          headers: { 'Accept': 'text/plain' },
+          cache: 'no-store'
+        });
         if (!response.ok) throw new Error(`Failed to load news: ${response.status}`);
 
         const markdown = await response.text();
