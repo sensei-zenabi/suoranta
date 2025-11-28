@@ -161,7 +161,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
   flex-shrink: 0;
   letter-spacing: 0.08em;
   border-top: 2px solid var(--screen-border);
-  background: rgba(0,0,0,0.2);
+  background: var(--screen-bg);
   position: sticky;
   bottom: 0;
   z-index: 5;
