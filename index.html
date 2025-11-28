@@ -81,9 +81,10 @@
     const newsContentEl = document.getElementById('news-content');
 
     function preserveEmptyLines(markdown = '') {
+      const EMPTY_PLACEHOLDER = '<div class="md-empty-line" aria-hidden="true"></div>';
       return markdown
         .split(/\r?\n/)
-        .map(line => (line.trim() === '' ? '&nbsp;' : line))
+        .map(line => (line.trim() === '' ? EMPTY_PLACEHOLDER : line))
         .join('\n');
     }
 
