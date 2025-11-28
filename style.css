@@ -25,15 +25,7 @@
   --font-size-crest: clamp(20px, 1vw + 18px, 26px);
 }
 
-* {
-  box-sizing: border-box;
-  scrollbar-width: none;
-}
-
-*::-webkit-scrollbar { width: 0; height: 0; }
-*::-webkit-scrollbar-thumb,
-*::-webkit-scrollbar-track { background: transparent; }
-
+/* ========== Typography & Readability (PC & Mobile) ========== */
 body, .content, .news-content pre { -ms-overflow-style: none; }
 html, body { height: 100%; }
 body {
@@ -52,6 +44,30 @@ body {
   overflow-y: hidden;
   letter-spacing: 0.04em;
 }
+
+@media (max-width: 480px) {
+  :root {
+    --font-size-body: clamp(16px, 5vw + 6px, 20px);
+    --font-size-small: clamp(13px, 3vw + 7px, 18px);
+    --font-size-medium: clamp(14px, 4vw + 6px, 19px);
+    --font-size-large: clamp(16px, 4vw + 7px, 20px);
+    --font-size-title: clamp(18px, 4vw + 8px, 22px);
+    --font-size-logo-min: 22px;
+    --font-size-logo-max: 40px;
+    --font-size-crest: clamp(18px, 3vw + 10px, 22px);
+  }
+
+  body { line-height: 1.45; }
+}
+
+* {
+  box-sizing: border-box;
+  scrollbar-width: none;
+}
+
+*::-webkit-scrollbar { width: 0; height: 0; }
+*::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-track { background: transparent; }
 
 a { color: var(--accent-amber); }
 
@@ -416,19 +432,6 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
 }
 
 @media (max-width: 480px) {
-  :root {
-    --font-size-body: clamp(16px, 5vw + 6px, 20px);
-    --font-size-small: clamp(13px, 3vw + 7px, 18px);
-    --font-size-medium: clamp(14px, 4vw + 6px, 19px);
-    --font-size-large: clamp(16px, 4vw + 7px, 20px);
-    --font-size-title: clamp(18px, 4vw + 8px, 22px);
-    --font-size-logo-min: 22px;
-    --font-size-logo-max: 40px;
-    --font-size-crest: clamp(18px, 3vw + 10px, 22px);
-  }
-
-  body { line-height: 1.45; }
-
   .site-header { padding: 18px 12px 12px; }
   .hero { padding: 12px 12px; gap: 10px; }
   .hero::after { left: 16px; bottom: -14px; font-size: var(--font-size-small); }
