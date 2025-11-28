@@ -80,6 +80,59 @@
 
     const newsContentEl = document.getElementById('news-content');
 
+    function buildNewsSections(markdown) {
+      const lines = markdown.split(/\r?\n/);
+      const sections = [];
+      let current = null;
+
+      lines.forEach(line => {
+        const headingMatch = line.match(/^###\s+(.*?)\s+###\s*$/);
+        if (headingMatch) {
+          if (current) sections.push(current);
+          current = { title: headingMatch[1].trim(), body: [] };
+        } else if (current) {
+          current.body.push(line);
+        }
+      });
+
+      if (current) sections.push(current);
+
+      return sections
+        .map(({ title, body }) => ({
+          title,
+          markdown: body.join('\n').trim()
+        }))
+        .filter(section => section.title || section.markdown);
+    }
+
+    function renderNewsSections(sections) {
+      newsContentEl.innerHTML = '';
+
+      if (!sections.length) {
+        newsContentEl.innerHTML = '<p class="error">No news items found.</p>';
+        return;
+      }
+
+      sections.forEach(section => {
+        const article = document.createElement('article');
+        article.className = 'news-card';
+
+        const heading = document.createElement('h3');
+        heading.className = 'post-title';
+        heading.textContent = section.title || 'News';
+        article.appendChild(heading);
+
+        if (section.markdown) {
+          const body = document.createElement('div');
+          body.className = 'news-body';
+          body.innerHTML = DOMPurify.sanitize(marked.parse(section.markdown));
+          article.appendChild(body);
+        }
+
+        newsContentEl.appendChild(article);
+      });
+    }
+
     async function loadNews() {
       if (!newsContentEl) return;
       newsContentEl.innerHTML = '<p>Loading latest news...</p>';
@@ -88,8 +141,15 @@
         if (!response.ok) throw new Error(`Failed to load news: ${response.status}`);
 
         const markdown = await response.text();
-        const rendered = DOMPurify.sanitize(marked.parse(markdown));
-        newsContentEl.innerHTML = rendered;
+        const sections = buildNewsSections(markdown);
+
+        if (!sections.length) {
+          const rendered = DOMPurify.sanitize(marked.parse(markdown));
+          newsContentEl.innerHTML = rendered;
+          return;
+        }
+
+        renderNewsSections(sections);
       } catch (err) {
         console.error(err);
         newsContentEl.innerHTML = '<p class="error">Unable to load news right now. Please try again later.</p>';
