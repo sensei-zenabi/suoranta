@@ -80,6 +80,14 @@
 
     const newsContentEl = document.getElementById('news-content');
 
+    function preserveEmptyLines(markdown = '') {
+      const EMPTY_PLACEHOLDER = '<div class="md-empty-line" aria-hidden="true"></div>';
+      return markdown
+        .split(/\r?\n/)
+        .map(line => (line.trim() === '' ? EMPTY_PLACEHOLDER : line))
+        .join('\n');
+    }
+
     function buildNewsSections(markdown) {
       const lines = markdown.split(/\r?\n/);
       const sections = [];
@@ -100,7 +108,7 @@
       return sections
         .map(({ title, body }) => ({
           title,
-          markdown: body.join('\n').trim()
+          markdown: preserveEmptyLines(body.join('\n').trim())
         }))
         .filter(section => section.title || section.markdown);
     }
@@ -144,7 +152,7 @@
         const sections = buildNewsSections(markdown);
 
         if (!sections.length) {
-          const rendered = DOMPurify.sanitize(marked.parse(markdown));
+          const rendered = DOMPurify.sanitize(marked.parse(preserveEmptyLines(markdown)));
           newsContentEl.innerHTML = rendered;
           return;
         }
