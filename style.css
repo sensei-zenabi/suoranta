@@ -402,12 +402,17 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
 
 .newsroom-frame.featured { grid-column: span 3; }
 
+.newsroom-image-link {
+  display: block;
+  color: inherit;
+}
+
 .newsroom-frame img {
   display: block;
   width: 100%;
   height: 180px;
   object-fit: cover;
-  object-position: top center;
+  object-position: center center;
 }
 
 .newsroom-frame.featured img { height: min(52vw, 460px); }
