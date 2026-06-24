@@ -408,7 +408,6 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
   height: 180px;
   object-fit: cover;
   object-position: top center;
-  filter: grayscale(1) sepia(1) hue-rotate(70deg) saturate(2.2) contrast(1.18) brightness(0.82);
 }
 
 .newsroom-frame.featured img { height: min(52vw, 460px); }
