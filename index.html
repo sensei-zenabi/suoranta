@@ -7,15 +7,16 @@
 
   <!-- Fonts + Styles -->
   <link rel="stylesheet" href="style.css" />
-  <meta name="theme-color" content="#40318d">
+  <meta name="theme-color" content="#08030f">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.9/dist/purify.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <!-- Background layers -->
+  <div class="bg city-glow"></div>
+  <div class="bg rain"></div>
+  <div class="bg fog"></div>
   <div class="bg print-grain"></div>
-  <div class="bg ribbon ribbon-top"></div>
-  <div class="bg ribbon ribbon-bottom"></div>
 
   <header class="site-header">
     <div class="hero">
@@ -40,7 +41,7 @@
 
   <div class="content">
     <!-- FEED gets populated from README -->
-    <main class="container" id="feed">
+    <main class="container hidden" id="feed">
       <noscript>
         <article class="card">
           <h2 class="post-title"><span class="jpn">オフライン</span> JavaScript Disabled</h2>
@@ -49,9 +50,26 @@
       </noscript>
     </main>
 
-    <section class="about container hidden" id="about">
-      <h2 class="section-title">BUDOSTACK News</h2>
-      <img src="images/about.png" alt="About" class="about-photo">
+    <section class="about container" id="about">
+      <h2 class="section-title">BUDOSTACK Newsroom</h2>
+      <div class="newsroom-gallery" aria-label="BUDOSTACK screenshots">
+        <figure class="newsroom-frame featured">
+          <img src="https://raw.githubusercontent.com/sensei-zenabi/BUDOSTACK/main/screenshots/demo.png" alt="BUDOSTACK demo screen" loading="eager">
+          <figcaption>DEMO // ESPER TERMINAL</figcaption>
+        </figure>
+        <figure class="newsroom-frame">
+          <img src="https://raw.githubusercontent.com/sensei-zenabi/BUDOSTACK/main/screenshots/login.png" alt="BUDOSTACK login screen" loading="lazy">
+          <figcaption>LOGIN // STREET ACCESS</figcaption>
+        </figure>
+        <figure class="newsroom-frame">
+          <img src="https://raw.githubusercontent.com/sensei-zenabi/BUDOSTACK/main/screenshots/help.png" alt="BUDOSTACK help screen" loading="lazy">
+          <figcaption>HELP // FIELD MANUAL</figcaption>
+        </figure>
+        <figure class="newsroom-frame">
+          <img src="https://raw.githubusercontent.com/sensei-zenabi/BUDOSTACK/main/screenshots/paint.png" alt="BUDOSTACK paint screen" loading="lazy">
+          <figcaption>PAINT // MEMORY LAB</figcaption>
+        </figure>
+      </div>
       <div id="news-content" class="news-content">
         <p>Loading latest news...</p>
       </div>
