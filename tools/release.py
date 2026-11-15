@@ -30,6 +30,17 @@ def reviewed_assets(folder, app):
     return assets
 
 
+def runtime_documents(binary):
+    if b"Open Watcom C/C++16 Run-Time system" not in binary:
+        return {}
+    if b"Open Watcom runtime source code is available" not in binary:
+        raise ValueError("Use a COMMANDS build with the Open Watcom source notice embedded.")
+    return {
+        name: (SITE / "vendor" / name).read_bytes()
+        for name in ("NOTICE.TXT", "WATCOM.TXT")
+    }
+
+
 def release(args):
     app = args.application.upper()
     if not re.fullmatch("[A-Z][A-Z0-9]{0,7}", app):
@@ -74,7 +85,7 @@ def release(args):
         raise ValueError("Use a new release label when changing package contents.")
 
     provenance = json.dumps({"version": args.version, "commands_commit": commit}).encode()
-    files = {executable: binary, **assets}
+    files = {executable: binary, **runtime_documents(binary), **assets}
     with tempfile.TemporaryDirectory(dir=SITE, prefix=".release-") as temporary:
         staged_zip = Path(temporary) / archive.name
         staged_index = Path(temporary) / index.name

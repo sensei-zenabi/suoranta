@@ -1,0 +1,8 @@
+BUDOSTACK DOS application
+Copyright (c) Ville Suoranta.
+
+This executable includes the Open Watcom C/C++ runtime.
+Portions copyright Open Watcom Contributors and Sybase, Inc.
+The runtime source code is available under the Sybase Open Watcom
+Public License from https://github.com/open-watcom/open-watcom-v2.
+The license text is supplied in WATCOM.TXT.
