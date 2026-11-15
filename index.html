@@ -7,33 +7,32 @@
   <meta name="theme-color" content="#161e44">
   <title>BUDOSTACK | MS-DOS Software</title>
   <link rel="stylesheet" href="style.css">
-  <script src="vendor/purify.js" defer></script>
-  <script src="news.mjs" type="module"></script>
 </head>
 <body id="top">
   <div class="site">
-    <header>
+    <header class="site-header">
       <div class="masthead">
-        <div class="masthead-copy">
-          <p class="imprint">BUDOSTACK SOFTWARE</p>
-          <h1>BUDO<span>STACK</span></h1>
-          <p class="strapline">Software for MS-DOS 5.0</p>
-        </div>
-        <p class="machine">486DX2 / 66 MHz<br>VGA COLOR</p>
+        <a class="brand" href="./" aria-label="BUDOSTACK home">
+          <span class="brand-mark" aria-hidden="true">B</span>
+          <span class="wordmark">BUDO<span>STACK</span><small>SOFTWARE</small></span>
+        </a>
+        <p class="machine"><strong>MS-DOS 5.0</strong><br>486DX2 / 66 MHz</p>
       </div>
       <nav class="menu" aria-label="Main navigation">
-        <a href="#applications">Applications</a>
-        <a href="#news">News</a>
-        <a href="#installation">Installation</a>
+        <a href="./" aria-current="page">Applications &amp; Install</a>
+        <a href="news.html">News</a>
       </nav>
     </header>
 
     <main>
       <div class="front">
         <div class="welcome">
-          <h2>Work on your 486.<br>Or open DOSBox.</h2>
-          <p>Write a manuscript, run engineering calculations, or master a set of floppy disks. BUDOSTACK brings together standalone DOS programs you can download one at a time.</p>
-          <a class="button primary" href="#applications">Browse applications <span aria-hidden="true">»</span></a>
+          <h1>Put DOS<br>back to work.</h1>
+          <p>Standalone tools for writing, programming, and engineering. Built for a 486 and ready for DOSBox.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#applications">Browse downloads <span aria-hidden="true">»</span></a>
+            <a class="install-link" href="#installation">Installation guide</a>
+          </div>
         </div>
         <figure class="showcase">
           <a href="screenshots/intro.png"><img src="screenshots/intro.png" width="640" height="480" alt="INTRO.EXE showing a karateka facing a CRT with the BUDOSTACK logo"></a>
@@ -44,10 +43,10 @@
       <section class="window" id="applications" aria-labelledby="applications-title">
         <header class="titlebar">
           <h2 id="applications-title">Applications</h2>
-          <span>COMMANDS / MS-DOS</span>
+          <a href="#installation">Installation guide »</a>
         </header>
         <div class="directory">
-          <p>Jump to an application</p>
+          <p>Product directory</p>
           <ul>
             <li><a href="#app-write">WRITE</a></li>
             <li><a href="#app-read">READ</a></li>
@@ -75,7 +74,7 @@
             </figure>
             <div class="download">
               <a class="button" href="releases/write.zip" download aria-label="Download WRITE ZIP"><span aria-hidden="true">↓</span> Download ZIP</a>
-              <span class="file-info">write.zip · 55 KB</span>
+              <span class="file-info" data-release="write">2026.11.13 · 55 KiB</span>
             </div>
           </article>
           <article class="app" id="app-read">
@@ -87,7 +86,7 @@
             </figure>
             <div class="download">
               <a class="button" href="releases/read.zip" download aria-label="Download READ ZIP"><span aria-hidden="true">↓</span> Download ZIP</a>
-              <span class="file-info">read.zip · 49 KB</span>
+              <span class="file-info" data-release="read">2026.11.13 · 49 KiB</span>
             </div>
           </article>
           <article class="app" id="app-board">
@@ -99,7 +98,7 @@
             </figure>
             <div class="download">
               <a class="button" href="releases/board.zip" download aria-label="Download BOARD ZIP"><span aria-hidden="true">↓</span> Download ZIP</a>
-              <span class="file-info">board.zip · 31 KB</span>
+              <span class="file-info" data-release="board">2026.11.13 · 31 KiB</span>
             </div>
           </article>
           <article class="app" id="app-calendar">
@@ -111,7 +110,7 @@
             </figure>
             <div class="download">
               <a class="button" href="releases/calendar.zip" download aria-label="Download CALENDAR ZIP"><span aria-hidden="true">↓</span> Download ZIP</a>
-              <span class="file-info">calendar.zip · 34 KB</span>
+              <span class="file-info" data-release="calendar">2026.11.13 · 34 KiB</span>
             </div>
           </article>
           <article class="app" id="app-code">
@@ -123,7 +122,7 @@
             </figure>
             <div class="download">
               <a class="button" href="releases/code.zip" download aria-label="Download CODE ZIP"><span aria-hidden="true">↓</span> Download ZIP</a>
-              <span class="file-info">code.zip · 76 KB</span>
+              <span class="file-info" data-release="code">2026.11.13 · 76 KiB</span>
             </div>
           </article>
           <article class="app" id="app-flow">
@@ -135,7 +134,7 @@
             </figure>
             <div class="download">
               <a class="button" href="releases/flow.zip" download aria-label="Download FLOW ZIP"><span aria-hidden="true">↓</span> Download ZIP</a>
-              <span class="file-info">flow.zip · 46 KB</span>
+              <span class="file-info" data-release="flow">2026.11.13 · 46 KiB</span>
             </div>
           </article>
           <article class="app" id="app-sheet">
@@ -147,7 +146,7 @@
             </figure>
             <div class="download">
               <a class="button" href="releases/sheet.zip" download aria-label="Download SHEET ZIP"><span aria-hidden="true">↓</span> Download ZIP</a>
-              <span class="file-info">sheet.zip · 79 KB</span>
+              <span class="file-info" data-release="sheet">2026.11.13 · 79 KiB</span>
             </div>
           </article>
           <article class="app" id="app-cmath">
@@ -159,7 +158,7 @@
             </figure>
             <div class="download">
               <a class="button" href="releases/cmath.zip" download aria-label="Download CMATH ZIP"><span aria-hidden="true">↓</span> Download ZIP</a>
-              <span class="file-info">cmath.zip · 87 KB</span>
+              <span class="file-info" data-release="cmath">2026.11.13 · 87 KiB</span>
             </div>
           </article>
           <article class="app" id="app-dbase">
@@ -171,7 +170,7 @@
             </figure>
             <div class="download">
               <a class="button" href="releases/dbase.zip" download aria-label="Download DBASE ZIP"><span aria-hidden="true">↓</span> Download ZIP</a>
-              <span class="file-info">dbase.zip · 52 KB</span>
+              <span class="file-info" data-release="dbase">2026.11.13 · 52 KiB</span>
             </div>
           </article>
           <article class="app" id="app-explorer">
@@ -183,7 +182,7 @@
             </figure>
             <div class="download">
               <a class="button" href="releases/explorer.zip" download aria-label="Download EXPLORER ZIP"><span aria-hidden="true">↓</span> Download ZIP</a>
-              <span class="file-info">explorer.zip · 43 KB</span>
+              <span class="file-info" data-release="explorer">2026.11.13 · 43 KiB</span>
             </div>
           </article>
           <article class="app" id="app-dskmnt">
@@ -195,7 +194,7 @@
             </figure>
             <div class="download">
               <a class="button" href="releases/dskmnt.zip" download aria-label="Download DSKMNT ZIP"><span aria-hidden="true">↓</span> Download ZIP</a>
-              <span class="file-info">dskmnt.zip · 41 KB</span>
+              <span class="file-info" data-release="dskmnt">2026.11.13 · 41 KiB</span>
             </div>
           </article>
           <article class="app" id="app-move">
@@ -207,7 +206,7 @@
             </figure>
             <div class="download">
               <a class="button" href="releases/move.zip" download aria-label="Download MOVE ZIP"><span aria-hidden="true">↓</span> Download ZIP</a>
-              <span class="file-info">move.zip · 11 KB</span>
+              <span class="file-info" data-release="move">2026.11.13 · 11 KiB</span>
             </div>
           </article>
           <article class="app" id="app-fdel">
@@ -219,7 +218,7 @@
             </figure>
             <div class="download">
               <a class="button" href="releases/fdel.zip" download aria-label="Download FDEL ZIP"><span aria-hidden="true">↓</span> Download ZIP</a>
-              <span class="file-info">fdel.zip · 10 KB</span>
+              <span class="file-info" data-release="fdel">2026.11.13 · 10 KiB</span>
             </div>
           </article>
           <article class="app" id="app-intro">
@@ -231,19 +230,9 @@
             </figure>
             <div class="download">
               <a class="button" href="releases/intro.zip" download aria-label="Download INTRO ZIP"><span aria-hidden="true">↓</span> Download ZIP</a>
-              <span class="file-info">intro.zip · 55 KB</span>
+              <span class="file-info" data-release="intro">2026.11.13 · 55 KiB</span>
             </div>
           </article>
-        </div>
-      </section>
-
-      <section class="window" id="news" aria-labelledby="news-title">
-        <header class="titlebar">
-          <h2 id="news-title">News</h2>
-          <a href="news.md">Plain text (.md)</a>
-        </header>
-        <div class="document" id="news-content" aria-busy="true">
-          <p>Read the <a href="news.md">news in Markdown</a>.</p>
         </div>
       </section>
 
