@@ -35,9 +35,11 @@ a:focus-visible { outline: 2px solid var(--highlight); outline-offset: 3px; }
   gap: 20px;
   min-height: 94px;
   padding: 16px 28px;
-  border-top: 1px solid var(--rule);
-  color: var(--white);
-  background: var(--screen);
+  border-top: 1px solid #9baad4;
+  color: #f4f7ff;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 3px, #5e7cb018 3px 4px),
+    linear-gradient(110deg, #0f1637 8%, #273a78 66%, #101637 100%);
 }
 .brand { display: inline-flex; align-items: center; gap: 14px; color: inherit; text-decoration: none; }
 .brand-mark {
@@ -46,26 +48,28 @@ a:focus-visible { outline: 2px solid var(--highlight); outline-offset: 3px; }
   width: 53px;
   height: 53px;
   border: 2px solid;
-  border-color: var(--white) var(--rule) var(--rule) var(--white);
-  background: var(--ink);
-  color: var(--screen);
+  border-color: #fff1b0 #815228 #815228 #fff1b0;
+  background: linear-gradient(#ffefa6, #e9a744 51%, #cc7f24 52%, #f1b54d);
+  color: #182045;
   font: italic 900 40px/1 Arial, sans-serif;
+  box-shadow: 2px 3px 0 #0b1027;
 }
 .wordmark {
-  color: var(--white);
+  color: #f4f7ff;
   font: italic 900 clamp(24px, 5.6vw, 50px)/.94 Arial, sans-serif;
   letter-spacing: -.055em;
+  text-shadow: 2px 2px #080e29;
 }
-.wordmark > span { color: var(--highlight); }
+.wordmark > span { color: #ffdc83; }
 .wordmark small {
   display: block;
   margin-top: 6px;
-  color: var(--ink);
+  color: #d3e8ff;
   font: 11px/1 Verdana, sans-serif;
   letter-spacing: .49em;
 }
-.machine { margin: 0; color: var(--ink); text-align: right; font: 12px/1.55 Verdana, Arial, sans-serif; }
-.machine strong { color: var(--white); font-size: 14px; }
+.machine { margin: 0; color: #d3e8ff; text-align: right; font: 12px/1.55 Verdana, Arial, sans-serif; }
+.machine strong { color: white; font-size: 14px; }
 
 .menu {
   display: flex;
@@ -95,19 +99,23 @@ main { padding: 16px; }
   gap: 25px;
   margin-bottom: 16px;
   padding: clamp(18px, 3vw, 33px);
-  border: 1px solid var(--rule);
-  background: var(--screen);
-  color: var(--white);
+  border: 1px solid #090e28;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 4px, #beccff13 4px 5px),
+    linear-gradient(125deg, #081530 8%, #20366a 64%, #0d163a);
+  color: #fff;
+  box-shadow: inset 0 1px #63769f;
 }
 .welcome h1 {
   margin: 0;
-  color: var(--white);
+  color: #fff4d8;
   font: 900 italic clamp(37px, 6.3vw, 74px)/.93 Arial, sans-serif;
   letter-spacing: -.055em;
+  text-shadow: 3px 3px #080f2d;
 }
-.welcome p { max-width: 38ch; margin: 15px 0 18px; color: var(--ink); }
+.welcome p { max-width: 38ch; margin: 15px 0 18px; color: #deebff; }
 .hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 9px 16px; }
-.install-link { color: var(--link); font-size: 13px; }
+.install-link { color: #d7ecff; font-size: 13px; }
 .button {
   display: inline-block;
   padding: 6px 11px;
@@ -120,7 +128,7 @@ main { padding: 16px; }
 }
 .button:hover { text-decoration: underline; }
 .button:active { border-color: var(--rule) var(--ink) var(--ink) var(--rule); }
-.primary { background: var(--ink); color: var(--screen); }
+.primary { border-color: #fff0b3 #9e6329 #9e6329 #fff0b3; background: linear-gradient(#ffeda8, #ffcc67 54%, #edab38 55%, #ffc967); }
 
 figure { margin: 0; min-width: 0; }
 figure > a { display: block; }
@@ -130,12 +138,13 @@ figcaption { margin-top: 5px; font: 13px/1.3 Verdana, Arial, sans-serif; }
   min-width: 0;
   padding: 6px;
   border: 2px solid;
-  border-color: var(--rule) var(--rule) var(--rule) var(--rule);
-  background: var(--screen);
+  border-color: #526490 #091026 #091026 #526490;
+  background: #101830;
+  box-shadow: 3px 4px 0 #090f26;
 }
 .showcase img { aspect-ratio: 1.65; object-fit: cover; object-position: 50% 48%; }
-.showcase figcaption { margin: 6px 3px 2px; color: var(--ink); }
-.showcase a { color: var(--link); }
+.showcase figcaption { margin: 6px 3px 2px; color: #c4d6fa; }
+.showcase a { color: #f9dc90; }
 
 .window { margin: 0 0 16px; border: 1px solid var(--rule); background: var(--screen); }
 .window:last-child { margin-bottom: 0; }
