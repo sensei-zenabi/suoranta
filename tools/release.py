@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Refresh one application in the BUDOSTACK download catalog."""
 import argparse
+import hashlib
 import json
 import re
 import subprocess
@@ -52,7 +53,7 @@ def release(args):
     index = SITE / "index.html"
     page = index.read_text(encoding="utf-8")
     marker = re.compile(
-        rf'(data-release="{app.lower()}">)([^<]+) · \d+ KiB(</span>)'
+        rf'(data-release="{app.lower()}" data-asset=")[^"]+(" data-version=")([^"]+)(">)(?:\d+ KiB)(</span>)'
     )
     entries = list(marker.finditer(page))
     if len(entries) != 1 or not archive.is_file():
@@ -79,7 +80,7 @@ def release(args):
             raise ValueError("--demo-dir must point to the reviewed companion folder.")
         assets = reviewed_assets(args.demo_dir, app)
 
-    if entries[0][2] == args.version and (
+    if entries[0][3] == args.version and (
         previous_binary != binary or previous_assets != assets
     ):
         raise ValueError("Use a new release label when changing package contents.")
@@ -99,8 +100,13 @@ def release(args):
                 raise ValueError("The staged ZIP failed verification.")
 
         size = (staged_zip.stat().st_size + 1023) // 1024
-        updated = marker.sub(lambda m: f"{m[1]}{args.version} · {size} KiB{m[3]}", page)
-        if previous_comment == provenance and previous_zip == staged_zip.read_bytes() and page == updated:
+        zip_bytes = staged_zip.read_bytes()
+        digest = hashlib.sha256(zip_bytes).hexdigest()
+        asset = f"{app.lower()}-{digest}.zip"
+        updated = marker.sub(
+            lambda m: f"{m[1]}{asset}{m[2]}{args.version}{m[4]}{size} KiB{m[5]}", page
+        )
+        if previous_comment == provenance and previous_zip == zip_bytes and page == updated:
             print(f"{app} {args.version} is already packaged from {commit[:12]}.")
             return
 
