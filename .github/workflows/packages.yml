@@ -1,0 +1,50 @@
+name: Publish download packages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'releases/*.zip'
+      - '.github/workflows/packages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: budostack-packages
+  cancel-in-progress: false
+
+jobs:
+  upload:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Upload new ZIPs and keep previous assets
+        shell: bash
+        run: |
+          tag=budostack-packages
+          if ! gh release view "$tag" >/dev/null; then
+            gh release create "$tag" --target "$(git rev-parse HEAD)" --latest=false \
+              --title "BUDOSTACK package archive" \
+              --notes "Versioned DOS application ZIPs for https://www.budostack.com/."
+          fi
+          release_id=$(gh api "repos/$GH_REPO/releases/tags/$tag" --jq .id)
+          uploaded=$(gh api --paginate "repos/$GH_REPO/releases/$release_id/assets?per_page=100" \
+            --jq '.[] | select(.state == "uploaded") | .name')
+          staging=$(mktemp -d)
+          for zip in releases/*.zip; do
+            digest=$(sha256sum "$zip")
+            asset="$(basename "$zip" .zip)-${digest%% *}.zip"
+            if ! grep -Fxq "$asset" <<< "$uploaded"; then
+              cp "$zip" "$staging/$asset"
+              gh release upload "$tag" "$staging/$asset"
+            fi
+          done
