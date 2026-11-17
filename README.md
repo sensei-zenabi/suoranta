@@ -18,16 +18,26 @@ Preview from the website repository with `python3 -m http.server 8000`, then ope
 
 The script reads the executable from the selected Git commit. It keeps the currently published companion files, updates the catalog version, package hash, and size, and records the full COMMANDS commit in the ZIP comment. For binaries linked with Open Watcom, the script checks for the embedded source notice and includes the runtime license and attribution. To replace companion files, pass `--demo-dir path/to/reviewed/WRITE`. The folder should contain only public, generic files with uppercase DOS 8.3 names. Keep the public backup and library examples when updating FLOW and DBASE, unless replacing them with reviewed generic examples.
 
-## Download dates and counts
+## Download dates and click counts
 
-Each uploaded ZIP has a content-based filename. The catalog displays the upload
-date of the linked asset in Helsinki time and sums GitHub's download counts for
-every published asset of that application. Keep older assets in the package
-archive to preserve those totals. Re-running the publisher skips ZIPs that have
-already been uploaded.
+The catalog shows the linked GitHub release asset's upload date in Helsinki time.
+Release ZIPs keep content-based filenames; older assets remain available.
 
-Counts begin with GitHub release downloads. Direct downloads of the GitHub
-Pages copies, including downloads before this change, are outside those totals.
-The Pages copy remains available if an asset is awaiting upload or JavaScript
-is disabled. When GitHub's statistics API is unavailable, a published ZIP can
-still be downloaded using its asset URL.
+The displayed counter measures trusted download-button activations (mouse, touch,
+keyboard, and middle click), including repeated clicks. It does not measure unique
+people or completed downloads. Page views and direct ZIP requests do not increment
+it. JavaScript must be enabled; network failures or blocking can prevent recording.
+Downloads proceed even when the counter service is unavailable.
+
+`click-counters.mjs` posts one random event ID per activation to the BUDOSTACK
+counter service. Retrying an event cannot double count. Counts use stable application
+IDs (`data-release`), so replacing a ZIP does not reset them. New click counters
+start at zero; historical GitHub download counts are not imported.
+
+The counter service is maintained in the Sites source repository for project
+`appgprj_6afc8ee34b8c81919e9693cb5e021091`, at
+https://budostack-download-clicks.firmcheetah8.chatgpt.site.
+Its D1 database stores only random click event IDs and application IDs. It has no
+public reset endpoint. Do not change application IDs or replace the database when
+publishing new packages. `GET /v1/clicks` is read-only; `POST /v1/clicks/{app}`
+records an event from an allowed website origin.
