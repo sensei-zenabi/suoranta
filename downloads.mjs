@@ -8,7 +8,6 @@ const dateFormat = new Intl.DateTimeFormat("en-CA", {
   month: "2-digit",
   day: "2-digit",
 });
-const countFormat = new Intl.NumberFormat("en");
 
 async function getJson(url) {
   const response = await fetch(url);
@@ -27,7 +26,6 @@ async function loadDownloads() {
   });
 
   const assets = new Map();
-  const totals = new Map();
   const releaseResponse = await fetch(`${releaseApi}/tags/${releaseTag}`);
   if (releaseResponse.status === 404) {
     for (const { button, mirror } of entries) button.href = mirror;
@@ -40,9 +38,7 @@ async function loadDownloads() {
     for (const asset of batch) {
       const match = assetName.exec(asset.name);
       if (!match || asset.state !== "uploaded" || assets.has(asset.name)) continue;
-      const app = match[1];
       assets.set(asset.name, asset);
-      totals.set(app, (totals.get(app) ?? 0) + asset.download_count);
     }
     if (batch.length < 100) break;
   }
@@ -50,17 +46,11 @@ async function loadDownloads() {
   for (const { metadata, button, mirror, stats } of entries) {
     const asset = assets.get(metadata.dataset.asset);
     if (!asset) button.href = mirror;
-    const count = totals.get(metadata.dataset.release);
-    if (count === undefined && !asset) continue;
-    const downloads = `${countFormat.format(count)} ${count === 1 ? "download" : "downloads"}`;
-    if (asset) {
-      const uploaded = document.createElement("time");
-      uploaded.dateTime = asset.created_at;
-      uploaded.textContent = `Uploaded ${dateFormat.format(new Date(asset.created_at))}`;
-      stats.append(uploaded, ` · ${downloads}`);
-    } else {
-      stats.textContent = downloads;
-    }
+    if (!asset) continue;
+    const uploaded = document.createElement("time");
+    uploaded.dateTime = asset.created_at;
+    uploaded.textContent = `Uploaded ${dateFormat.format(new Date(asset.created_at))}`;
+    stats.append(uploaded);
     stats.hidden = false;
   }
 }
