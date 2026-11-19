@@ -1,3 +1,7 @@
+## DBASE status messages · 19 November 2026
+
+Bottom-bar messages such as “Database opened” now clear automatically after three seconds, even when DBASE is idle. Get the updated DOS package from [Applications & Install](./#app-dbase).
+
 ## DBASE record navigation · 19 November 2026
 
 Use Left and Right to switch records and Up and Down to scroll one row at a time. Wrapping starts on, reserves each field’s configured Preview Height, and adds a blank row between fields. Get the DOS package from [Applications & Install](./#app-dbase).
