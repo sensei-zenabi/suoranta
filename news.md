@@ -1,3 +1,7 @@
+## DBASE update · 19 November 2026
+
+Text and Memo fields now accept multiple lines and paste from the shared COMMANDS clipboard. In Table Design, press Enter on a field to set its column width. Download the updated DOS package from [Applications & Install](./#app-dbase).
+
 ## BUDOSTACK for MS-DOS
 
 In the age of AI finding time to actually utilize your brains can be
