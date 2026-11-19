@@ -1,3 +1,7 @@
+## DBASE Records view · 19 November 2026
+
+The Records pane now displays one record at a time, with fields stacked vertically. Wrapping keeps whole words together. In Table Design, press Enter on a field and choose **Preview Height** to set how many rows it can show. Download the updated DOS package from [Applications & Install](./#app-dbase).
+
 ## DBASE update · 19 November 2026
 
 Text and Memo fields now accept multiple lines and paste from the shared COMMANDS clipboard. In Table Design, press Enter on a field to set its column width. Download the updated DOS package from [Applications & Install](./#app-dbase).
