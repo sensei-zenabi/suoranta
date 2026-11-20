@@ -1,3 +1,9 @@
+## Four DOS terminals with SESSIONS · 21 November 2026
+
+Run [SESSIONS.EXE](./#app-sessions) to open a DOS prompt and use Alt+Shift+F1 through F4 to move between four terminals. Leave an editor or a database open, run another application, and resume where you left off. Tab completes paths. Alt+Shift+F10 closes every terminal and returns to DOS.
+
+[CODE](./#app-code), [FLOW](./#app-flow), [CMATH](./#app-cmath), and [INTRO](./#app-intro) were updated for workspace switching. All 16 DOS applications are available from [Applications & Install](./#applications).
+
 ## CPU benchmark · 20 November 2026
 
 Run `CPU.EXE` in DOS to measure instruction throughput and get an approximate 486DX2-equivalent MHz reading. The test takes about one second and returns to the prompt. Download it from [Applications & Install](./#app-cpu).
