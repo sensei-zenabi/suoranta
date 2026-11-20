@@ -1,3 +1,7 @@
+## CPU benchmark · 20 November 2026
+
+Run `CPU.EXE` in DOS to measure instruction throughput and get an approximate 486DX2-equivalent MHz reading. The test takes about one second and returns to the prompt. Download it from [Applications & Install](./#app-cpu).
+
 ## More responsive DOS controls · 20 November 2026
 
 On supported DOS systems, releasing a held key cancels its queued auto-repeat before it reaches the application. This helps prevent extra deletions and cursor moves when the application is busy. CODE, BOARD, CALENDAR, EXPLORER, and FLOW also reuse their rendered workspace during menu navigation for faster response.
