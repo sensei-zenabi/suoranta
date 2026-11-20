@@ -1,3 +1,9 @@
+## More responsive DOS controls · 20 November 2026
+
+On supported DOS systems, releasing a held key cancels its queued auto-repeat before it reaches the application. This helps prevent extra deletions and cursor moves when the application is busy. CODE, BOARD, CALENDAR, EXPLORER, and FLOW also reuse their rendered workspace during menu navigation for faster response.
+
+The eleven updated DOS packages are available from [Applications & Install](./#applications).
+
 ## DBASE status messages · 19 November 2026
 
 Bottom-bar messages such as “Database opened” now clear automatically after three seconds, even when DBASE is idle. Get the updated DOS package from [Applications & Install](./#app-dbase).
