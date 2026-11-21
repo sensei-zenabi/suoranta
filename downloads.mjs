@@ -1,7 +1,7 @@
 const releaseApi = "https://api.github.com/repos/sensei-zenabi/suoranta/releases";
 const releaseTag = "budostack-packages";
 const downloadBase = "https://github.com/sensei-zenabi/suoranta/releases/download";
-const assetName = /^([a-z][a-z0-9]{0,7})-[0-9a-f]{64}\.zip$/;
+const assetName = /^(?:[a-z][a-z0-9]{0,7}|[a-z0-9]+(?:-[a-z0-9]+)*-\d+\.\d+\.\d+-dos)-[0-9a-f]{64}\.zip$/;
 const dateFormat = new Intl.DateTimeFormat("en-CA", {
   timeZone: "Europe/Helsinki",
   year: "numeric",
@@ -20,8 +20,8 @@ async function loadDownloads() {
     const row = metadata.closest(".download");
     const button = row.querySelector("a");
     const mirror = button.getAttribute("href");
-    // Route downloads through GitHub even if the statistics API is unavailable.
-    button.href = `${downloadBase}/${releaseTag}/${metadata.dataset.asset}`;
+    // Keep existing application download links. Games use their site mirror until the asset is confirmed.
+    if (metadata.hasAttribute("data-release")) button.href = `${downloadBase}/${releaseTag}/${metadata.dataset.asset}`;
     return { metadata, button, mirror, stats: row.querySelector("[data-download-stats]") };
   });
 
@@ -47,6 +47,7 @@ async function loadDownloads() {
     const asset = assets.get(metadata.dataset.asset);
     if (!asset) button.href = mirror;
     if (!asset) continue;
+    button.href = `${downloadBase}/${releaseTag}/${metadata.dataset.asset}`;
     const uploaded = document.createElement("time");
     uploaded.dateTime = asset.created_at;
     uploaded.textContent = `Uploaded ${dateFormat.format(new Date(asset.created_at))}`;

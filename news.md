@@ -1,3 +1,7 @@
+## Dungeon Hero for MS-DOS · 21 November 2026
+
+[Dungeon Hero 1.0.0](games/#dungeon-hero) opens the new Games tab. Explore five dungeons, target individual limbs in turn-based battles, and earn a place in the local Hall of Fame. Play in English or Finnish.
+
 ## Four DOS terminals with SESSIONS · 21 November 2026
 
 Run [SESSIONS.EXE](./#app-sessions) to open a DOS prompt and use Alt+Shift+F1 through F4 to move between four terminals. Leave an editor or a database open, run another application, and resume where you left off. Tab completes paths. Alt+Shift+F10 closes every terminal and returns to DOS.
