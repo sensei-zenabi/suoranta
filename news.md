@@ -1,3 +1,7 @@
+## Dungeon Hero 1.0.1 · 21 November 2026
+
+Dark basalt panels, iron highlights, and bronze trim give the title screen, dungeon HUD, combat, and Hall of Fame a consistent look while keeping small text readable. Download the update from [Games](games/#dungeon-hero).
+
 ## Dungeon Hero for MS-DOS · 21 November 2026
 
 [Dungeon Hero 1.0.0](games/#dungeon-hero) opens the new Games tab. Explore five dungeons, target individual limbs in turn-based battles, and earn a place in the local Hall of Fame. Play in English or Finnish.
