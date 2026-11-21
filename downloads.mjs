@@ -19,18 +19,12 @@ async function loadDownloads() {
   const entries = [...document.querySelectorAll("[data-asset]")].map((metadata) => {
     const row = metadata.closest(".download");
     const button = row.querySelector("a");
-    const mirror = button.getAttribute("href");
-    // Keep existing application download links. Games use their site mirror until the asset is confirmed.
-    if (metadata.hasAttribute("data-release")) button.href = `${downloadBase}/${releaseTag}/${metadata.dataset.asset}`;
-    return { metadata, button, mirror, stats: row.querySelector("[data-download-stats]") };
+    return { metadata, button, stats: row.querySelector("[data-download-stats]") };
   });
 
   const assets = new Map();
   const releaseResponse = await fetch(`${releaseApi}/tags/${releaseTag}`);
-  if (releaseResponse.status === 404) {
-    for (const { button, mirror } of entries) button.href = mirror;
-    return;
-  }
+  if (releaseResponse.status === 404) return;
   if (!releaseResponse.ok) throw new Error(`GitHub returned ${releaseResponse.status}`);
   const release = await releaseResponse.json();
   for (let page = 1; ; page += 1) {
@@ -43,9 +37,8 @@ async function loadDownloads() {
     if (batch.length < 100) break;
   }
 
-  for (const { metadata, button, mirror, stats } of entries) {
+  for (const { metadata, button, stats } of entries) {
     const asset = assets.get(metadata.dataset.asset);
-    if (!asset) button.href = mirror;
     if (!asset) continue;
     button.href = `${downloadBase}/${releaseTag}/${metadata.dataset.asset}`;
     const uploaded = document.createElement("time");
@@ -57,5 +50,5 @@ async function loadDownloads() {
 }
 
 loadDownloads().catch(() => {
-  // The release download URLs remain usable when the statistics API fails.
+  // The site downloads remain usable when the release asset API fails.
 });
