@@ -1,6 +1,6 @@
 # BUDOSTACK website
 
-GitHub Pages serves this static site at [www.budostack.com](https://www.budostack.com/). `index.html` is the About homepage. `applications.html` is the Applications & Install tab. `games/index.html` is the Games tab. `news.html` is the News tab and renders `news.md`.
+GitHub Pages serves this static site at [www.budostack.com](https://www.budostack.com/). `index.html` is the About homepage. `applications.html` is the Applications tab. `games/index.html` is the Games tab. `news.html` is the News tab and renders `news.md`.
 
 Preview from the website repository with `python3 -m http.server 8000`, then open <http://localhost:8000/>.
 
