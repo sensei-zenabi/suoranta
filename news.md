@@ -1,3 +1,7 @@
+## BUDO 0.5.2 for MS-DOS · 21 November 2026
+
+[BUDO](games/#budo) brings local two-player karate to the Games tab. Share a keyboard, remap either player's controls, and spar in the Riverside Court. The game features VGA animation, AdLib music, and Sound Blaster effects.
+
 ## COMMANDS application versions · 21 November 2026
 
 All 16 DOS applications in [Applications](applications.html#applications) now show their own version number. The current builds start at 1.0.0. Each download includes a DOS-readable `VERSION.TXT`.
