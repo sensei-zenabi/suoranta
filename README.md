@@ -1,6 +1,6 @@
 # BUDOSTACK website
 
-GitHub Pages serves this static site at [www.budostack.com](https://www.budostack.com/). `index.html` is the Applications & Install tab. `games/index.html` is the Games tab. `news.html` is the News tab and renders `news.md`.
+GitHub Pages serves this static site at [www.budostack.com](https://www.budostack.com/). `index.html` is the About homepage. `applications.html` is the Applications & Install tab. `games/index.html` is the Games tab. `news.html` is the News tab and renders `news.md`.
 
 Preview from the website repository with `python3 -m http.server 8000`, then open <http://localhost:8000/>.
 
@@ -14,7 +14,7 @@ Preview from the website repository with `python3 -m http.server 8000`, then ope
    ```
 
 3. Extract the resulting `releases/write.zip` and run it in DOSBox. Update `screenshots/write.png` if the old screenshot no longer represents the application. Add the release notes to `news.md` and preview both tabs.
-4. Commit the ZIP, the updated `index.html`, and any screenshot or News edits in the same PR. Merge to the GitHub Pages branch to publish. Confirm the download from the live site. The GitHub Actions workflow uploads new ZIPs to the `budostack-packages` release after the merge. Check the workflow completed before verifying the upload date and download count.
+4. Commit the ZIP, the updated `applications.html`, and any screenshot or News edits in the same PR. Merge to the GitHub Pages branch to publish. Confirm the download from the live site. The GitHub Actions workflow uploads new ZIPs to the `budostack-packages` release after the merge. Check the workflow completed before verifying the upload date and download count.
 
 The script reads the version and executable from the same Git commit. It keeps the currently published companion files, writes `VERSION.TXT` inside the ZIP, updates the visible catalog version, package hash, and size, and records the full COMMANDS commit in the ZIP comment. It rejects changed contents at the same version and version rollbacks. For binaries linked with Open Watcom, the script checks for the embedded source notice and includes the runtime license and attribution. To replace companion files, pass `--demo-dir path/to/reviewed/WRITE`. The folder should contain only public, generic files with uppercase DOS 8.3 names. Keep the public backup and library examples when updating FLOW and DBASE, unless replacing them with reviewed generic examples.
 

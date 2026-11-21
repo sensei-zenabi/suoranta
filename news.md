@@ -1,6 +1,6 @@
 ## COMMANDS application versions · 21 November 2026
 
-All 16 DOS applications in [Applications & Install](./#applications) now show their own version number. The current builds start at 1.0.0. Each download includes a DOS-readable `VERSION.TXT`.
+All 16 DOS applications in [Applications & Install](applications.html#applications) now show their own version number. The current builds start at 1.0.0. Each download includes a DOS-readable `VERSION.TXT`.
 
 ## Dungeon Hero 1.0.1 · 21 November 2026
 
@@ -12,35 +12,35 @@ Dark basalt panels, iron highlights, and bronze trim give the title screen, dung
 
 ## Four DOS terminals with SESSIONS · 21 November 2026
 
-Run [SESSIONS.EXE](./#app-sessions) to open a DOS prompt and use Alt+Shift+F1 through F4 to move between four terminals. Leave an editor or a database open, run another application, and resume where you left off. Tab completes paths. Alt+Shift+F10 closes every terminal and returns to DOS.
+Run [SESSIONS.EXE](applications.html#app-sessions) to open a DOS prompt and use Alt+Shift+F1 through F4 to move between four terminals. Leave an editor or a database open, run another application, and resume where you left off. Tab completes paths. Alt+Shift+F10 closes every terminal and returns to DOS.
 
-[CODE](./#app-code), [FLOW](./#app-flow), [CMATH](./#app-cmath), and [INTRO](./#app-intro) were updated for workspace switching. All 16 DOS applications are available from [Applications & Install](./#applications).
+[CODE](applications.html#app-code), [FLOW](applications.html#app-flow), [CMATH](applications.html#app-cmath), and [INTRO](applications.html#app-intro) were updated for workspace switching. All 16 DOS applications are available from [Applications & Install](applications.html#applications).
 
 ## CPU benchmark · 20 November 2026
 
-Run `CPU.EXE` in DOS to measure instruction throughput and get an approximate 486DX2-equivalent MHz reading. The test takes about one second and returns to the prompt. Download it from [Applications & Install](./#app-cpu).
+Run `CPU.EXE` in DOS to measure instruction throughput and get an approximate 486DX2-equivalent MHz reading. The test takes about one second and returns to the prompt. Download it from [Applications & Install](applications.html#app-cpu).
 
 ## More responsive DOS controls · 20 November 2026
 
 On supported DOS systems, releasing a held key cancels its queued auto-repeat before it reaches the application. This helps prevent extra deletions and cursor moves when the application is busy. CODE, BOARD, CALENDAR, EXPLORER, and FLOW also reuse their rendered workspace during menu navigation for faster response.
 
-The eleven updated DOS packages are available from [Applications & Install](./#applications).
+The eleven updated DOS packages are available from [Applications & Install](applications.html#applications).
 
 ## DBASE status messages · 19 November 2026
 
-Bottom-bar messages such as “Database opened” now clear automatically after three seconds, even when DBASE is idle. Get the updated DOS package from [Applications & Install](./#app-dbase).
+Bottom-bar messages such as “Database opened” now clear automatically after three seconds, even when DBASE is idle. Get the updated DOS package from [Applications & Install](applications.html#app-dbase).
 
 ## DBASE record navigation · 19 November 2026
 
-Use Left and Right to switch records and Up and Down to scroll one row at a time. Wrapping starts on, reserves each field’s configured Preview Height, and adds a blank row between fields. Get the DOS package from [Applications & Install](./#app-dbase).
+Use Left and Right to switch records and Up and Down to scroll one row at a time. Wrapping starts on, reserves each field’s configured Preview Height, and adds a blank row between fields. Get the DOS package from [Applications & Install](applications.html#app-dbase).
 
 ## DBASE Records view · 19 November 2026
 
-The Records pane now displays one record at a time, with fields stacked vertically. Wrapping keeps whole words together. In Table Design, press Enter on a field and choose **Preview Height** to set how many rows it can show. Download the updated DOS package from [Applications & Install](./#app-dbase).
+The Records pane now displays one record at a time, with fields stacked vertically. Wrapping keeps whole words together. In Table Design, press Enter on a field and choose **Preview Height** to set how many rows it can show. Download the updated DOS package from [Applications & Install](applications.html#app-dbase).
 
 ## DBASE update · 19 November 2026
 
-Text and Memo fields now accept multiple lines and paste from the shared COMMANDS clipboard. In Table Design, press Enter on a field to set its column width. Download the updated DOS package from [Applications & Install](./#app-dbase).
+Text and Memo fields now accept multiple lines and paste from the shared COMMANDS clipboard. In Table Design, press Enter on a field to set its column width. Download the updated DOS package from [Applications & Install](applications.html#app-dbase).
 
 ## BUDOSTACK for MS-DOS
 
@@ -61,4 +61,4 @@ internet connection. An old desktop computer will work nicely for this
 purpose. If possible, try using old 5:4 or 4:3 display - you might be
 positively surprised!
 
-Start with [WRITE](./#app-write) to draft a manuscript, [FLOW](./#app-flow) to diagram a process, or [EXPLORER](./#app-explorer) to manage files in two panes.
+Start with [WRITE](applications.html#app-write) to draft a manuscript, [FLOW](applications.html#app-flow) to diagram a process, or [EXPLORER](applications.html#app-explorer) to manage files in two panes.
