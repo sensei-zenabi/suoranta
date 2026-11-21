@@ -6,17 +6,17 @@ Preview from the website repository with `python3 -m http.server 8000`, then ope
 
 ## Release a COMMANDS application
 
-1. Merge and test the ready-to-run DOS build in COMMANDS. Fetch the release commit or tag in your local COMMANDS checkout.
-2. In a branch of this website repository, run the release command. Substitute the app, version, and source ref. Without `--ref`, the tool uses the local COMMANDS `main`.
+1. Bump the app's version in `COMMANDS/BUILD/VERSIONS.TXT` when its distributed files change. Merge the tested DOS build and version list into COMMANDS `main`. Fetch the release commit or tag in your local COMMANDS checkout.
+2. In a branch of this website repository, run the release command with the app name and source ref. Without `--ref`, the tool uses the local COMMANDS `main`.
 
    ```sh
-   python3 tools/release.py ../COMMANDS WRITE 1.2.0 --ref origin/main
+   python3 tools/release.py ../COMMANDS WRITE --ref origin/main
    ```
 
 3. Extract the resulting `releases/write.zip` and run it in DOSBox. Update `screenshots/write.png` if the old screenshot no longer represents the application. Add the release notes to `news.md` and preview both tabs.
 4. Commit the ZIP, the updated `index.html`, and any screenshot or News edits in the same PR. Merge to the GitHub Pages branch to publish. Confirm the download from the live site. The GitHub Actions workflow uploads new ZIPs to the `budostack-packages` release after the merge. Check the workflow completed before verifying the upload date and download count.
 
-The script reads the executable from the selected Git commit. It keeps the currently published companion files, updates the catalog version, package hash, and size, and records the full COMMANDS commit in the ZIP comment. For binaries linked with Open Watcom, the script checks for the embedded source notice and includes the runtime license and attribution. To replace companion files, pass `--demo-dir path/to/reviewed/WRITE`. The folder should contain only public, generic files with uppercase DOS 8.3 names. Keep the public backup and library examples when updating FLOW and DBASE, unless replacing them with reviewed generic examples.
+The script reads the version and executable from the same Git commit. It keeps the currently published companion files, writes `VERSION.TXT` inside the ZIP, updates the visible catalog version, package hash, and size, and records the full COMMANDS commit in the ZIP comment. It rejects changed contents at the same version and version rollbacks. For binaries linked with Open Watcom, the script checks for the embedded source notice and includes the runtime license and attribution. To replace companion files, pass `--demo-dir path/to/reviewed/WRITE`. The folder should contain only public, generic files with uppercase DOS 8.3 names. Keep the public backup and library examples when updating FLOW and DBASE, unless replacing them with reviewed generic examples.
 
 ## Release a GAMES title
 

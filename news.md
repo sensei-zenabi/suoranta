@@ -1,3 +1,7 @@
+## COMMANDS application versions · 21 November 2026
+
+All 16 DOS applications in [Applications & Install](./#applications) now show their own version number. The current builds start at 1.0.0. Each download includes a DOS-readable `VERSION.TXT`.
+
 ## Dungeon Hero 1.0.1 · 21 November 2026
 
 Dark basalt panels, iron highlights, and bronze trim give the title screen, dungeon HUD, combat, and Hall of Fame a consistent look while keeping small text readable. Download the update from [Games](games/#dungeon-hero).
