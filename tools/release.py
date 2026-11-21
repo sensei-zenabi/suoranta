@@ -71,7 +71,7 @@ def release(args):
         raise ValueError("Use the DOS application name, for example WRITE.")
 
     archive = SITE / "releases" / f"{app.lower()}.zip"
-    index = SITE / "index.html"
+    index = SITE / "applications.html"
     page = index.read_text(encoding="utf-8")
     marker = re.compile(
         rf'(data-release="{app.lower()}" data-asset=")[^"]+(" data-version=")([^"]+)(">)(?:Version [0-9.]+ · )?\d+ KiB(</span>)'

@@ -205,6 +205,19 @@ figcaption { margin-top: 5px; font: 13px/1.3 Verdana, Arial, sans-serif; }
 .document table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
 .document td, .document th { border: 1px solid var(--rule); padding: 4px 8px; }
 
+.about-document {
+  max-width: 676px;
+  margin-inline: auto;
+  font-size: 1rem;
+}
+.about-photo { margin-bottom: 22px; }
+.about-photo img {
+  border: 2px solid var(--rule);
+  image-rendering: auto;
+}
+.about-copy p { margin: 0 0 1.2em; }
+.about-copy p:last-child { margin-bottom: 0; }
+
 footer {
   display: flex;
   flex-wrap: wrap;
