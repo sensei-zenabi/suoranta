@@ -1,3 +1,7 @@
+## RALLY 0.4.3 for MS-DOS · 22 November 2026
+
+[RALLY](games/#rally) brings two-player split-screen racing to the Games tab. Race three circuits in summer or winter with tuned driving physics and skid marks that show where the tyres lost grip.
+
 ## BUDO 0.5.2 for MS-DOS · 21 November 2026
 
 [BUDO](games/#budo) brings local two-player karate to the Games tab. Share a keyboard, remap either player's controls, and spar in the Riverside Court. The game features VGA animation, AdLib music, and Sound Blaster effects.
