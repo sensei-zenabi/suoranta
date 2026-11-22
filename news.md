@@ -1,3 +1,7 @@
+## BUDO 0.5.3 · 22 November 2026
+
+The F2 key-mapping menu responds faster and handles quick keystrokes in the order you press them. Download [BUDO 0.5.3](games/#budo).
+
 ## RALLY 0.4.4 · 22 November 2026
 
 Car shadows now rotate with the cars and stay on the ground over jumps. Download [RALLY 0.4.4](games/#rally).
