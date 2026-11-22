@@ -1,3 +1,7 @@
+## RALLY 0.6.4 · 22 November 2026
+
+Build and share custom circuits with the new track editor. Lay gravel or tarmac, shape hills and hollows with the elevation overlay, and place water and a finish line. Press F5 at track selection to open the editor. During a race, Esc returns to track selection. Download [RALLY 0.6.4](games/#rally).
+
 ## BUDOSTACK game intros · 22 November 2026
 
 [RALLY 0.5.1](games/#rally), [BUDO 0.6.1](games/#budo), and [Dungeon Hero 1.2.1](games/#dungeon-hero) now open with the BUDOSTACK splash and a three-voice Sound Blaster FM jingle in the Japanese Hirajoshi scale. The PC speaker plays the same melody on systems without FM audio.
