@@ -1,3 +1,11 @@
+## RALLY 0.4.4 · 22 November 2026
+
+Car shadows now rotate with the cars and stay on the ground over jumps. Download [RALLY 0.4.4](games/#rally).
+
+## Dungeon Hero 1.1.0 · 22 November 2026
+
+The music grows more ominous as you descend through five distinct soundtracks, culminating in the Crown Vault. Inspect each lore object for the first time to earn 25 points. Menus respond faster, and existing saves still load. Download [Dungeon Hero 1.1.0](games/#dungeon-hero).
+
 ## RALLY 0.4.3 for MS-DOS · 22 November 2026
 
 [RALLY](games/#rally) brings two-player split-screen racing to the Games tab. Race three circuits in summer or winter with tuned driving physics and skid marks that show where the tyres lost grip.
