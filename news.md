@@ -1,3 +1,7 @@
+## GYMNAST 0.6.0 · 22 November 2026
+
+[GYMNAST 0.6.0](games/#gymnast) adds hand rebounds. Hold Up and tap Z at the cue during an inverted descent to plant your hands and link into the next trick.
+
 ## GYMNAST 0.5.1 for MS-DOS · 22 November 2026
 
 [GYMNAST](games/#gymnast) brings floor gymnastics to the Games tab. Sprint into a tumbling pass, link rebounds, and finish with a salute or lunge.
