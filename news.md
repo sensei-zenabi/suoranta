@@ -1,3 +1,7 @@
+## BUDO 0.7.1 · 22 November 2026
+
+Use Kick + Punch at close range to attempt a Judo hip throw. Blocking stops the throw. The new knockout animation plays before the winner is announced. Download [BUDO 0.7.1](games/#budo).
+
 ## RALLY 0.6.4 · 22 November 2026
 
 Build and share custom circuits with the new track editor. Lay gravel or tarmac, shape hills and hollows with the elevation overlay, and place water and a finish line. Press F5 at track selection to open the editor. During a race, Esc returns to track selection. Download [RALLY 0.6.4](games/#rally).
