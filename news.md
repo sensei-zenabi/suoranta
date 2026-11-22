@@ -1,3 +1,7 @@
+## GYMNAST 0.5.1 for MS-DOS · 22 November 2026
+
+[GYMNAST](games/#gymnast) brings floor gymnastics to the Games tab. Sprint into a tumbling pass, link rebounds, and finish with a salute or lunge.
+
 ## BUDO 0.7.1 · 22 November 2026
 
 Use Kick + Punch at close range to attempt a Judo hip throw. Blocking stops the throw. The new knockout animation plays before the winner is announced. Download [BUDO 0.7.1](games/#budo).
