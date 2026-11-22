@@ -13,7 +13,7 @@ Preview from the website repository with `python3 -m http.server 8000`, then ope
    python3 tools/release.py ../COMMANDS WRITE --ref origin/main
    ```
 
-3. Extract the resulting `releases/write.zip` and run it in DOSBox. Update `screenshots/write.png` if the old screenshot no longer represents the application. Add the release notes to `news.md` and preview both tabs.
+3. Extract the resulting `releases/write.zip` and run it in an MS-DOS emulator. Update `screenshots/write.png` if the old screenshot no longer represents the application. Add the release notes to `news.md` and preview both tabs.
 4. Commit the ZIP, the updated `applications.html`, and any screenshot or News edits in the same PR. Merge to the GitHub Pages branch to publish. Confirm the download from the live site. The GitHub Actions workflow uploads new ZIPs to the `budostack-packages` release after the merge. Check the workflow completed before verifying the upload date and download count.
 
 The script reads the version and executable from the same Git commit. It keeps the currently published companion files, writes `VERSION.TXT` inside the ZIP, updates the visible catalog version, package hash, and size, and records the full COMMANDS commit in the ZIP comment. It rejects changed contents at the same version and version rollbacks. For binaries linked with Open Watcom, the script checks for the embedded source notice and includes the runtime license and attribution. To replace companion files, pass `--demo-dir path/to/reviewed/WRITE`. The folder should contain only public, generic files with uppercase DOS 8.3 names. Keep the public backup and library examples when updating FLOW and DBASE, unless replacing them with reviewed generic examples.
@@ -22,7 +22,7 @@ The script reads the version and executable from the same Git commit. It keeps t
 
 1. Build and test from the intended GAMES release commit, then run its packager with `python3 tools/package_game.py DUNGEON --output /tmp/games-release`.
 2. Copy the versioned ZIP to `releases/`. Keep earlier versions available. Update the game’s download link, version, and size in `games/index.html`. Set `data-asset` to the ZIP stem, a hyphen, the ZIP’s full SHA-256 (from `sha256sum`), and `.zip`. Upload screenshots that represent the release and announce it in `news.md`.
-3. Preview the Games page and test the download from a clean DOSBox install. Merge the website changes to `main` and verify the live page and ZIP. The upload workflow adds the immutable ZIP to `budostack-packages` and the page shows its upload date once the asset is available.
+3. Preview the Games page and test the download from a clean MS-DOS emulator setup. Merge the website changes to `main` and verify the live page and ZIP. The upload workflow adds the immutable ZIP to `budostack-packages` and the page shows its upload date once the asset is available.
 
 ## Download dates and click counts
 

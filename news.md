@@ -61,8 +61,8 @@ have enough information.
 
 BUDOSTACK is a collection of applications designed for MS-DOS with one
 goal in mind: force the user to process and produce information without
-the help of AI. Easiest way to get started is to download DOSBOX into
-your preferred device, and install the BUDOSTACK application suite.
+the help of AI. To get started, install an MS-DOS emulator on your device and
+download the BUDOSTACK applications.
 
 For maximum focus, we recommend setting up an environment without 
 internet connection. An old desktop computer will work nicely for this
