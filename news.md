@@ -1,3 +1,7 @@
+## BUDOSTACK game intros · 22 November 2026
+
+[RALLY 0.5.1](games/#rally), [BUDO 0.6.1](games/#budo), and [Dungeon Hero 1.2.1](games/#dungeon-hero) now open with the BUDOSTACK splash and a three-voice Sound Blaster FM jingle in the Japanese Hirajoshi scale. The PC speaker plays the same melody on systems without FM audio.
+
 ## BUDO 0.5.3 · 22 November 2026
 
 The F2 key-mapping menu responds faster and handles quick keystrokes in the order you press them. Download [BUDO 0.5.3](games/#budo).
