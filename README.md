@@ -4,6 +4,12 @@ GitHub Pages serves this static site at [www.budostack.com](https://www.budostac
 
 Preview from the website repository with `python3 -m http.server 8000`, then open <http://localhost:8000/>.
 
+## Page guidelines
+
+- **Games.** Give each title a short description above the download button and include representative screenshots. Keep the button, version, size, upload date, and click count together. Put controls and setup instructions in the game package.
+- **News.** Add a dated, newest-first entry to `news.md` for every published application or game release, including updates to existing titles. Include the title, version, a brief summary of what changed, and a link to the relevant download entry. Commit the News entry with the release.
+- **About.** Keep **BUDOSTACK** and **Ville Suoranta** bold in the opening paragraph. Italicize the closing paragraph and follow it with “Best Regards” and “Ville” on two lines.
+
 ## Release a COMMANDS application
 
 1. Bump the app's version in `COMMANDS/BUILD/VERSIONS.TXT` when its distributed files change. Merge the tested DOS build and version list into COMMANDS `main`. Fetch the release commit or tag in your local COMMANDS checkout.
@@ -21,7 +27,7 @@ The script reads the version and executable from the same Git commit. It keeps t
 ## Release a GAMES title
 
 1. Build and test from the intended GAMES release commit, then run its packager with `python3 tools/package_game.py DUNGEON --output /tmp/games-release`.
-2. Copy the versioned ZIP to `releases/`. Keep earlier versions available. Update the game’s download link, version, and size in `games/index.html`. Set `data-asset` to the ZIP stem, a hyphen, the ZIP’s full SHA-256 (from `sha256sum`), and `.zip`. Upload screenshots that represent the release and announce it in `news.md`.
+2. Copy the versioned ZIP to `releases/`. Keep earlier versions available. Update the game’s download link, version, and size in `games/index.html`. Set `data-asset` to the ZIP stem, a hyphen, the ZIP’s full SHA-256 (from `sha256sum`), and `.zip`. Keep the title’s `data-release` ID stable across versions. For a new title, add its ID to the counter service before publishing the game. Upload screenshots that represent the release and announce it in `news.md`.
 3. Preview the Games page and test the download from a clean MS-DOS emulator setup. Merge the website changes to `main` and verify the live page and ZIP. The upload workflow adds the immutable ZIP to `budostack-packages` and the page shows its upload date once the asset is available.
 
 ## Download dates and click counts
@@ -36,14 +42,14 @@ it. JavaScript must be enabled; network failures or blocking can prevent recordi
 Downloads proceed even when the counter service is unavailable.
 
 `click-counters.mjs` posts one random event ID per activation to the BUDOSTACK
-counter service. Retrying an event cannot double count. Counts use stable application
+counter service. Retrying an event cannot double count. Counts use stable application and game
 IDs (`data-release`), so replacing a ZIP does not reset them. New click counters
 start at zero; historical GitHub download counts are not imported.
 
 The counter service is maintained in the Sites source repository for project
 `appgprj_6afc8ee34b8c81919e9693cb5e021091`, at
 https://budostack-download-clicks.firmcheetah8.chatgpt.site.
-Its D1 database stores only random click event IDs and application IDs. It has no
-public reset endpoint. Do not change application IDs or replace the database when
-publishing new packages. `GET /v1/clicks` is read-only; `POST /v1/clicks/{app}`
+Its D1 database stores only random click event IDs and catalog IDs. It has no
+public reset endpoint. Do not change catalog IDs or replace the database when
+publishing new packages. `GET /v1/clicks` is read-only; `POST /v1/clicks/{id}`
 records an event from an allowed website origin.
