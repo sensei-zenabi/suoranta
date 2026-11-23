@@ -1,3 +1,7 @@
+## BOMBTAG 0.3.2 · 23 November 2026
+
+[BOMBTAG 0.3.2](games/#bombtag) adds four procedural arena styles, from dry galleries to flooded grottoes. Gravity carries rope swings back through the arc even while you hold a direction. The music keeps a steady tempo during heavy action, and round-win markers stay clear of weapon names.
+
 ## BOMBTAG 0.2.0 for MS-DOS · 23 November 2026
 
 [BOMBTAG](games/#bombtag) brings a two-player demolition duel to the Games tab. Swing between ledges, cut rock slabs loose, and drain pools into the cavern as you race to win three rounds.
