@@ -1,3 +1,7 @@
+## BOMBTAG 0.2.0 for MS-DOS · 23 November 2026
+
+[BOMBTAG](games/#bombtag) brings a two-player demolition duel to the Games tab. Swing between ledges, cut rock slabs loose, and drain pools into the cavern as you race to win three rounds.
+
 ## GYMNAST 0.6.0 · 22 November 2026
 
 [GYMNAST 0.6.0](games/#gymnast) adds hand rebounds. Hold Up and tap Z at the cue during an inverted descent to plant your hands and link into the next trick.
