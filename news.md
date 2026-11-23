@@ -1,3 +1,7 @@
+## BOMBTAG 0.4.4 · 23 November 2026
+
+[BOMBTAG 0.4.4](games/#bombtag) fixes rock shelves that stayed suspended after a drill bomb cut their last support. Falling rock pushes through loose sand and gravel. Water levels out across connected pools, and bombs that enter water become duds.
+
 ## BOMBTAG 0.3.2 · 23 November 2026
 
 [BOMBTAG 0.3.2](games/#bombtag) adds four procedural arena styles, from dry galleries to flooded grottoes. Gravity carries rope swings back through the arc even while you hold a direction. The music keeps a steady tempo during heavy action, and round-win markers stay clear of weapon names.
