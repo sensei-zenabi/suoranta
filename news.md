@@ -1,3 +1,7 @@
+## DBASE 1.1.0 · 26 November 2026
+
+[DBASE 1.1.0](applications.html#app-dbase) adds encrypted Budo Database files and opens existing .DB files for conversion. Save a sort for each table, reorder the Tables pane, and select field text with the mouse or Shift keys. TXT, Markdown, and HTML exports share a 70-column layout and use the saved table and record order.
+
 ## BOMBTAG 0.4.4 · 23 November 2026
 
 [BOMBTAG 0.4.4](games/#bombtag) fixes rock shelves that stayed suspended after a drill bomb cut their last support. Falling rock pushes through loose sand and gravel. Water levels out across connected pools, and bombs that enter water become duds.
