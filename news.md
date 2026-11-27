@@ -1,3 +1,19 @@
+## BOARD 1.1.1 · 27 November 2026
+
+[BOARD 1.1.1](applications.html#app-board) encrypts new workspace saves and autosaves and still opens older workspaces. Declining recovery when opening a saved workspace discards its autosave.
+
+## CALENDAR 1.1.0 · 27 November 2026
+
+[CALENDAR 1.1.0](applications.html#app-calendar) adds portable, encrypted .CAL databases. Use Open, Save, or Save As from the File menu, or start CALENDAR with a .CAL filename. Edits autosave to the active database.
+
+## READ 1.1.0 · 27 November 2026
+
+[READ 1.1.0](applications.html#app-read) opens the encrypted .PPR documents saved by the latest WRITE release and continues to open older .PPR documents.
+
+## WRITE 1.1.1 · 27 November 2026
+
+[WRITE 1.1.1](applications.html#app-write) encrypts new .PPR saves, softens the ruler colors, and removes the current session’s .BAK files on normal exit. An interrupted session leaves its backups available.
+
 ## BOMBTAG 0.5.1 · 27 November 2026
 
 [BOMBTAG 0.5.1](games/#bombtag) makes grappling ropes bend around ledges and lets players carry their momentum through a swing. Press F2 at the title screen to remap either player’s keys. The game saves the bindings between sessions.
