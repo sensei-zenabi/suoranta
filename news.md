@@ -1,3 +1,7 @@
+## BOMBTAG 0.5.1 · 27 November 2026
+
+[BOMBTAG 0.5.1](games/#bombtag) makes grappling ropes bend around ledges and lets players carry their momentum through a swing. Press F2 at the title screen to remap either player’s keys. The game saves the bindings between sessions.
+
 ## DBASE 1.1.0 · 26 November 2026
 
 [DBASE 1.1.0](applications.html#app-dbase) adds encrypted Budo Database files and opens existing .DB files for conversion. Save a sort for each table, reorder the Tables pane, and select field text with the mouse or Shift keys. TXT, Markdown, and HTML exports share a 70-column layout and use the saved table and record order.
