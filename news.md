@@ -1,3 +1,9 @@
+## Green CRT for COMMANDS · 28 November 2026
+
+Twelve COMMANDS applications now open in Green CRT by default. Choose another palette from **Theme Setting…** to save that preference for the app. The Applications page shows the updated theme in use, from editing a manuscript to calculating an RC filter and inspecting a disk image.
+
+Updated downloads include [BOARD 1.2.2](applications.html#app-board), [CALENDAR 1.2.2](applications.html#app-calendar), [READ 1.2.2](applications.html#app-read), [WRITE 1.2.2](applications.html#app-write), [CMATH 1.1.2](applications.html#app-cmath), [CODE 1.1.2](applications.html#app-code), [DBASE 1.1.2](applications.html#app-dbase), [DSKMNT 1.1.2](applications.html#app-dskmnt), [EXPLORER 1.1.2](applications.html#app-explorer), [FLOW 1.1.2](applications.html#app-flow), [SESSIONS 1.1.2](applications.html#app-sessions), [SHEET 1.1.2](applications.html#app-sheet).
+
 ## BOARD 1.1.1 · 27 November 2026
 
 [BOARD 1.1.1](applications.html#app-board) encrypts new workspace saves and autosaves and still opens older workspaces. Declining recovery when opening a saved workspace discards its autosave.
