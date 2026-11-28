@@ -1,3 +1,7 @@
+## SESSIONS 1.2.1 · 28 November 2026
+
+[SESSIONS 1.2.1](applications.html#app-sessions) can launch DOS games while your other terminals stay suspended. Type `BOMBTAG` to launch the game directly, or use `NATIVE RALLY` for another VGA game. On exit, SESSIONS restores the terminal and lets you return to your open applications and unsaved work.
+
 ## SESSIONS 1.1.3 · 28 November 2026
 
 [SESSIONS 1.1.3](applications.html#app-sessions) brings WRITE’s Green CRT document colors to all four DOS prompts and standard command output. The workspace menu uses the same dark green background and marks the selected terminal with a brighter border.
