@@ -1,3 +1,7 @@
+## SESSIONS 1.1.3 · 28 November 2026
+
+[SESSIONS 1.1.3](applications.html#app-sessions) brings WRITE’s Green CRT document colors to all four DOS prompts and standard command output. The workspace menu uses the same dark green background and marks the selected terminal with a brighter border.
+
 ## Green CRT for COMMANDS · 28 November 2026
 
 Twelve COMMANDS applications now open in Green CRT by default. Choose another palette from **Theme Setting…** to save that preference for the app. The Applications page shows the updated theme in use, from editing a manuscript to calculating an RC filter and inspecting a disk image.
